@@ -3,45 +3,66 @@
   <q-page :style-fn="myTweak" padding>
     <div class="row">
       <div class="col-2">
-        <q-toggle v-model="value" color="accent" label="Nuevo" />
-        <fieldset>
-          <legend>Marca</legend>
-          <div class="q-pr-xl">
-            <q-checkbox
-              val="secondary"
-              label="Samsung (40)"
-              color="secondary"
-            />
-            <q-checkbox val="secondary" label="Huawei (40)" color="secondary" />
-            <q-checkbox val="secondary" label="Nokia (40)" color="secondary" />
-            <q-checkbox val="secondary" label="IPhone (40)" color="secondary" />
-            <q-checkbox val="secondary" label="Xiaomi (40)" color="secondary" />
-          </div>
-        </fieldset>
-        <fieldset>
-          <legend>Sistema</legend>
-          <div class="q-pr-xl">
-            <q-checkbox
-              val="secondary"
-              label="Android (40)"
-              color="secondary"
-            />
-            <q-checkbox
-              val="secondary"
-              label="Windows (40)"
-              color="secondary"
-            />
-            <q-checkbox val="secondary" label="IOS (40)" color="secondary" />
-          </div>
-        </fieldset>
-        <fieldset>
-          <legend>Pantalla</legend>
-          <div class="q-pr-xl">
-            <q-checkbox val="secondary" label="6.0 (40)" color="secondary" />
-            <q-checkbox val="secondary" label="5.5 (40)" color="secondary" />
-            <q-checkbox val="secondary" label="5 (40)" color="secondary" />
-          </div>
-        </fieldset>
+        <q-scroll-area style="height: 500px; max-width: 300px">
+          <q-toggle v-model="value" color="accent" label="Nuevo" />
+
+          <fieldset>
+            <legend>Marca</legend>
+            <div class="q-pr-xl">
+              <q-checkbox
+                val="secondary"
+                label="Samsung (40)"
+                color="secondary"
+              />
+              <q-checkbox
+                val="secondary"
+                label="Huawei (40)"
+                color="secondary"
+              />
+              <q-checkbox
+                val="secondary"
+                label="Nokia (40)"
+                color="secondary"
+              />
+              <q-checkbox
+                val="secondary"
+                label="IPhone (40)"
+                color="secondary"
+              />
+              <q-checkbox
+                val="secondary"
+                label="Xiaomi (40)"
+                color="secondary"
+              />
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend>Sistema</legend>
+            <div class="q-pr-xl">
+              <q-checkbox
+                val="secondary"
+                label="Android (40)"
+                color="secondary"
+              />
+              <q-checkbox
+                val="secondary"
+                label="Windows (40)"
+                color="secondary"
+              />
+              <q-checkbox val="secondary" label="IOS (40)" color="secondary" />
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend>Pantalla</legend>
+            <div class="q-pr-xl">
+              <q-checkbox val="secondary" label="6.0 (40)" color="secondary" />
+              <q-checkbox val="secondary" label="5.5 (40)" color="secondary" />
+              <q-checkbox val="secondary" label="5 (40)" color="secondary" />
+            </div>
+          </fieldset>
+        </q-scroll-area>
       </div>
 
       <div class="col-10">
@@ -133,6 +154,88 @@
               {{ descripcion }}
             </q-card-section>
           </q-card>
+
+          <q-card class="my-card">
+            <img
+              src="https://i.blogs.es/8143a4/samsung-galaxy-j6-specifications-2/450_1000.webp"
+            />
+            <q-card-section>
+              <div class="text-h6" style="text-align: center">$132.00</div>
+              <div class="text-subtitle2" style="text-align: center">
+                Samsung J6, Pantalla de 5.5
+              </div>
+            </q-card-section>
+            <q-card-section class="q-pt-none">
+              {{ descripcion }}
+            </q-card-section>
+          </q-card>
+
+          <q-card class="my-card">
+            <img
+              src="https://i.blogs.es/8143a4/samsung-galaxy-j6-specifications-2/450_1000.webp"
+            />
+            <q-card-section>
+              <div class="text-h6" style="text-align: center">$132.00</div>
+              <div class="text-subtitle2" style="text-align: center">
+                Samsung J6, Pantalla de 5.5
+              </div>
+            </q-card-section>
+            <q-card-section class="q-pt-none">
+              {{ descripcion }}
+            </q-card-section>
+          </q-card>
+
+          <q-card class="my-card">
+            <img
+              src="https://i.blogs.es/8143a4/samsung-galaxy-j6-specifications-2/450_1000.webp"
+            />
+            <q-card-section>
+              <div class="text-h6" style="text-align: center">$132.00</div>
+              <div class="text-subtitle2" style="text-align: center">
+                Samsung J6, Pantalla de 5.5
+              </div>
+            </q-card-section>
+            <q-card-section class="q-pt-none">
+              {{ descripcion }}
+            </q-card-section>
+          </q-card>
+
+          <q-card class="my-card">
+            <img
+              src="https://i.blogs.es/8143a4/samsung-galaxy-j6-specifications-2/450_1000.webp"
+            />
+            <q-card-section>
+              <div class="text-h6" style="text-align: center">$132.00</div>
+              <div class="text-subtitle2" style="text-align: center">
+                Samsung J6, Pantalla de 5.5
+              </div>
+            </q-card-section>
+            <q-card-section class="q-pt-none">
+              {{ descripcion }}
+            </q-card-section>
+          </q-card>
+        </div>
+        <div class="row">
+          <div class="col">
+            <q-pagination
+              v-model="current"
+              max="8"
+              direction-links
+              gutter="20px"
+              class="q-mt-md"
+            />
+          </div>
+          <div class="col">
+            <div class="q-pa-md row items-start q-gutter-md">
+              <label>Articulos por página</label>
+              <q-select
+                outlined
+                v-model="model"
+                class="inputSmaller"
+                :options="options"
+              ></q-select>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -142,7 +245,8 @@
 <script setup>
 import { ref } from "vue";
 const descripcion = "64GB, 2GB Ram, Color Negro";
-const dense = ref(true);
+const options = [25, 26, 27, 28, 29];
+const current = ref(1);
 </script>
 
 <style lang="scss" scoped>
@@ -153,6 +257,9 @@ const dense = ref(true);
 
 .inputSmaller {
   width: 100px;
-  height: 5px;
+}
+
+.inputPosition {
+  margin: 0 auto;
 }
 </style>
