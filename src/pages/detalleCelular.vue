@@ -12,19 +12,19 @@
         >
           <q-carousel-slide
             :name="1"
-            img-src="https://live.mrf.io/statics/i/ps/www.muycomputer.com/wp-content/uploads/2018/06/Galaxy-J6-2.jpg?width=1200&enable=upscale"
+            img-src="https://www.cnet.com/a/img/resize/fa30df0ab174346771eef6924905c91bbfcb55ca/hub/2014/09/13/38d0b3b2-a123-4912-b950-9ea8aa18b6ba/xerxes-1708-033.jpg?auto=webp&width=768"
           />
           <q-carousel-slide
             :name="2"
-            img-src="https://www.smartprix.com/bytes/wp-content/uploads/2018/05/Samsung-J6-2018-Review-in-images-6.jpg"
+            img-src="https://i.blogs.es/1a6888/650_1000_iphone-6-1/1366_2000.png"
           />
           <q-carousel-slide
             :name="3"
-            img-src="https://www.lavanguardia.com/andro4all/hero/2018/05/Samsung-Galaxy-J6-y-J8.jpg?width=1200&aspect_ratio=16:9"
+            img-src="https://cdn.computerhoy.com/sites/navi.axelspringer.es/public/media/image/2015/10/125097-autopsia-iphone-6s-todas-sus-piezas-componentes.jpg?tf=3840x"
           />
           <q-carousel-slide
             :name="4"
-            img-src="https://beebom.com/wp-content/uploads/2018/05/galaxy-j6-display.jpg"
+            img-src="https://media.wired.co.uk/photos/606db4f2e46630a583ab3127/master/w_1600%2Cc_limit/iPhone6main.jpg"
           />
         </q-carousel>
       </div>
