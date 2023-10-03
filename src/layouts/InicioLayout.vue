@@ -25,8 +25,15 @@
           <q-btn color="primary" label="Estadisticas" />
         </div>
 
+       <div class="q-pa-md q-gutter-md">
+          <q-item clickable v-ripple to="/agregar" flat dense round>
+            <q-btn color="primary" size="lg" rounded icon="add" />
+          </q-item>
+        </div>
+
+
+
         <div class="q-pa-md q-gutter-md">
-          <q-btn color="primary" size="lg" rounded icon="add" />
           <q-btn flat round color="white" size="lg" icon="shopping_cart" />
         </div>
       </q-toolbar>

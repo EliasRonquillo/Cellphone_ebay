@@ -11,13 +11,21 @@ const routes = [
   {
     path: "/",
     component: () => import("layouts/InicioLayout.vue"),
-    children: [{ path: "", component: () => import("pages/PaginaInicio.vue") }],
+    
+    children: [{ path: "",name: 'InicioLayout.vue', component: () => import("pages/PaginaInicio.vue") }],
   },
   {
     path: "/detalle",
     component: () => import("layouts/InicioLayout.vue"),
     children: [
       { path: "", component: () => import("pages/detalleCelular.vue") },
+    ],
+  },
+  {
+    path: "/agregar",
+    component: () => import("layouts/InicioLayout.vue"),
+    children: [
+      { path: "", component: () => import("pages/agregarCelular.vue") },
     ],
   },
 
