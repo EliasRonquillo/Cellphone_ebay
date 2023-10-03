@@ -37,7 +37,7 @@
 
       <!-- Boton para la ventana emergente!-->
       <div class="q-pa-md q-gutter-sm">
-        <q-btn label="Prompt" color="primary" @click="prompt = true" />
+        <q-btn label="Nuevo Anuncio" color="primary" @click="prompt = true" />
       </div>
 
       <!--  Ventana emergente como card -->
