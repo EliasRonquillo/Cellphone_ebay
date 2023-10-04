@@ -29,6 +29,14 @@ const routes = [
     ],
   },
 
+  {
+    path: "/inicio",
+    component: () => import("layouts/InicioLayout.vue"),
+    children: [
+      { path: "", component: () => import("pages/PaginaInicio.vue") },
+    ],
+  },
+
   // Always leave this as last one,
   // but you can also remove it
   {

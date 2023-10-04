@@ -15,11 +15,11 @@
                 </div>
             </q-card-section>
 
-            <q-card-section class="q-pt-none">
+            <q-card-section class="col-md-6 col-12 q-pa-md">
                 <div class="row">
-                    <div class="col-md-6 col-12">
+                    <div class="col-md-6 col-12 q-pa-md">
                         <!-- Primera columna -->
-                        <fieldset style="border: 2px solid #000000">
+                        <fieldset style="border: 2px solid #000000" class="q-gutter-">
                             <div class="q-gutter-sm">
 
                                 <div class="input-group">
@@ -30,33 +30,34 @@
                                 </div>
                             </div>
 
-                            <div class="q-gutter-sm">
-
+                            <div class="col-md-6 col-;g12 q-pa-md">
+                                <br>
                                 <div class="input-group">
                                     <label class="label">Marca:</label>
                                     <q-input v-model="marca" outlined dense @keyup.enter="prompt = false"
-                                        style=" border: 2px solid #00000098 ; width: 300px;" />
+                                        style=" border: 2px solid #00000098 ; " />
                                 </div>
+
                                 <div class="input-group">
                                     <label class="label">Modelo:</label>
                                     <q-input v-model="modelo" outlined dense @keyup.enter="prompt = false"
-                                        style=" border: 2px solid #00000098 ; width: 300px;" />
+                                        style=" border: 2px solid #00000098 ; " />
                                 </div>
                                 <div class="input-group">
                                     <label>Marca:</label>
                                     <q-select label="" transition-show="scale" transition-hide="scale" filled
-                                        v-model="selectedOption" :options="options"
-                                        style="width: 200px; border: 2px solid #00000098 ;" @keyup.enter="prompt = false" />
+                                        v-model="selectedOption" :options="options" style=" border: 2px solid #00000098 ;"
+                                        @keyup.enter="prompt = false" />
                                 </div>
                                 <div class="input-group">
                                     <label class="label">ROM:</label>
                                     <q-input v-model="rum" label="" outlined dense @keyup.enter="prompt = false"
-                                        style=" border: 2px solid #00000098 ; width: 300px;" />
+                                        style=" border: 2px solid #00000098 ; " />
                                 </div>
                                 <div class="input-group">
                                     <label class="label">RAM:</label>
                                     <q-input v-model="ram" label="" outlined dense @keyup.enter="prompt = false"
-                                        style=" border: 2px solid #00000098 ; width: 300px;" />
+                                        style=" border: 2px solid #00000098 ; " />
                                 </div>
                             </div>
                         </fieldset>
@@ -106,7 +107,7 @@
                     </div>
 
                     <div class="col-md-6 col-12">
-                        <!-- Segunda columna -->
+                        <!-- Segunda columna --><br />
                         <fieldset>
                             <br /><br /><br /><br />
                             <div class="q-gutter-sm">
@@ -116,12 +117,12 @@
                                 <div class="input-group">
                                     <label class="label">Vendedor:</label>
                                     <q-input v-model="vendedor" label="" outlined dense @keyup.enter="prompt = false"
-                                        style="width: 200px; border: 2px solid #00000098 ;" />
+                                        style=" border: 2px solid #00000098 ;" />
                                 </div>
                                 <div class="input-group">
                                     <label class="label">Telefono:</label>
                                     <q-input v-model="telefono" label="" outlined dense @keyup.enter="prompt = false"
-                                        style="width: 200px; border: 2px solid #00000098 ;" />
+                                        style=" border: 2px solid #00000098 ;" />
                                 </div>
                                 <label class="label">Descripción:</label>
                                 <q-input v-model="descripcion" label="" outlined dense @keyup.enter="prompt = false"
@@ -222,7 +223,7 @@ export default {
 .input-group {
     display: flex;
     align-items: center;
-    margin-bottom: 1px;
+    margin-bottom: 10px;
 
 }
 
@@ -260,4 +261,5 @@ export default {
   
   */
 </style>
+    
     
