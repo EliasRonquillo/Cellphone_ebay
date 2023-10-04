@@ -1,6 +1,6 @@
 <template>
   <div class="row">
-    <div class="col-8">
+    <div class="col-12 col-md-8">
       <div class="q-pa-md">
         <q-carousel
           animated
@@ -46,13 +46,13 @@
   </div>
 
   <div class="row justify-center">
-    <div class="col">
+    <div class="col-12">
       <h4 class="text-center">DESCRIPCIÓN</h4>
     </div>
   </div>
 
   <div class="row justify-center">
-    <div class="col">
+    <div class="col-12">
       <div class="text-center q-gutter-xl">
         <textarea cols="60" rows="10">
 Estado: Nuevo
