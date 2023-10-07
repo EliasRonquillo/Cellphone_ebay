@@ -19,6 +19,45 @@
                 <div class="row">
                     <div class="col-md-6 col-12 q-pa-md">
                         <!-- Primera columna -->
+
+
+                        <!-- Carrusel para cuando este sea responsive -->
+                        <div v-if="$q.screen.lt.md" class="q-gutter-md">
+
+                            <fieldset style="border: 2px solid #000000">
+                                <legend> <label class="label"> Imagenes</label></legend>
+
+                                <div class="row">
+
+                                    <div class="col"><!-- tercer de minicarrusel imagenes-->
+                                        <div class="col-md-6 col-12 q-pa-md" style="position: relative;">
+                                            <q-carousel animated v-model="slide" navigation infinite :autoplay="autoplay"
+                                                arrows transition-prev="slide-right" transition-next="slide-left"
+                                                @mouseenter="autoplay = false" @mouseleave="autoplay = true"
+                                                style="height: 100px; height:200px ;">
+                                                <q-carousel-slide :name="1"
+                                                    img-src="https://elcomercio.pe/resizer/3LcA6gymp3LjmhSX0OVvu6SPhBo=/1200x675/smart/filters:format(jpeg):quality(75)/arc-anglerfish-arc2-prod-elcomercio.s3.amazonaws.com/public/PUGKOK7IOBCERJG4LSGBOR7GSE.jpg" />
+                                                <q-carousel-slide :name="2"
+                                                    img-src="https://images.milenio.com/wEg_JOP_V-jOw8tOxvbOR7-3qZU=/345x237/uploads/media/2019/03/30/telefonos-creando-distracciones-complican-descanso.jpg" />
+
+                                            </q-carousel>
+                                            <div
+                                                style="position: absolute; bottom: 40%; left: 52%; transform: translateX(-50%); z-index: 1;">
+                                                <q-btn icon="add" color="secondary" label="" @click="openFilePicker" rounded
+                                                    style="display: flex;" />
+                                                <b class="text-white">Agregar foto</b>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </fieldset>
+                            <br><br>
+
+                        </div>
+
+                        <!-- Botón estático en pantallas más grandes -->
+
                         <fieldset style="border: 2px solid #000000" class="q-gutter-">
                             <div class="q-gutter-sm">
 
@@ -61,54 +100,57 @@
                                 </div>
                             </div>
                         </fieldset>
-                        <br />
-                        <fieldset style="border: 2px solid #000000">
-                            <legend> <label class="label"> Imagenes</label></legend>
-                            <!-- en divs para que hayan 3 columnas-->
-                            <div class="row">
-                                <div class="col-2"><!-- primer columna de botones-->
-                                    <q-btn icon="add" color="primary" label="" @click="openFilePicker" rounded />
-                                    <br>
 
-                                    <br><br> <br><br> <br><br>
-                                    <q-btn icon="remove" color="negative" label="" @click="deleteFiles" rounded />
 
-                                </div>
+                        <div v-if="$q.screen.gt.md" class="q-gutter-md">
+                            <fieldset style="border: 2px solid #000000">
+                                <legend> <label class="label"> Imagenes</label></legend>
+                                <!-- en divs para que hayan 3 columnas-->
+                                <div class="row">
+                                    <div class="col-2"><!-- primer columna de botones-->
+                                        <q-btn icon="add" color="primary" label="" @click="openFilePicker" rounded />
+                                        <br>
 
-                                <div class="col-5"><!-- segunda  columna de informacion de imagenes-->
+                                        <br><br> <br><br> <br><br>
+                                        <q-btn icon="remove" color="negative" label="" @click="deleteFiles" rounded />
 
-                                    <div class="row">
-                                        <div class="col"> <label class="label"> N°</label><br> 1<br>2</div>
+                                    </div>
 
-                                        <div class="col"> <label class="label"> Tamaño</label><br> 2MB<br>3MB</div>
+                                    <div class="col"><!-- segunda  columna de informacion de imagenes-->
 
-                                        <div class="col"> <label class="label"> Tipo</label><br> JPG<br>PNG</div>
+                                        <div class="row ">
+                                            <div class="col"> <label class="label"> N°</label><br> 1<br>2</div>
 
+                                            <div class="col"> <label class="label"> Tamaño</label><br> 2MB<br>3MB</div>
+
+                                            <div class="col"> <label class="label"> Tipo</label><br> JPG<br>PNG</div>
+
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col"><!-- tercer de minicarrusel imagenes-->
+                                        <div class="q-pa-md">
+                                            <q-carousel swipeable animated v-model="slide" thumbnails infinite
+                                                style="height: 100px; height:200px ;">
+                                                <q-carousel-slide :name="1"
+                                                    img-src="https://elcomercio.pe/resizer/3LcA6gymp3LjmhSX0OVvu6SPhBo=/1200x675/smart/filters:format(jpeg):quality(75)/arc-anglerfish-arc2-prod-elcomercio.s3.amazonaws.com/public/PUGKOK7IOBCERJG4LSGBOR7GSE.jpg" />
+                                                <q-carousel-slide :name="2"
+                                                    img-src="https://images.milenio.com/wEg_JOP_V-jOw8tOxvbOR7-3qZU=/345x237/uploads/media/2019/03/30/telefonos-creando-distracciones-complican-descanso.jpg" />
+
+
+                                            </q-carousel>
+                                        </div>
                                     </div>
                                 </div>
 
-
-                                <div class="col"><!-- tercer de minicarrusel imagenes-->
-                                    <div class="q-pa-md">
-                                        <q-carousel swipeable animated v-model="slide" thumbnails infinite
-                                            style="height: 100px; height:200px ;">
-                                            <q-carousel-slide :name="1"
-                                                img-src="https://elcomercio.pe/resizer/3LcA6gymp3LjmhSX0OVvu6SPhBo=/1200x675/smart/filters:format(jpeg):quality(75)/arc-anglerfish-arc2-prod-elcomercio.s3.amazonaws.com/public/PUGKOK7IOBCERJG4LSGBOR7GSE.jpg" />
-                                            <q-carousel-slide :name="2"
-                                                img-src="https://images.milenio.com/wEg_JOP_V-jOw8tOxvbOR7-3qZU=/345x237/uploads/media/2019/03/30/telefonos-creando-distracciones-complican-descanso.jpg" />
-
-
-                                        </q-carousel>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </fieldset>
+                            </fieldset>
+                        </div>
                     </div>
 
-                    <div class="col-md-6 col-12">
+                    <div class="col-md-6 col-12 q-pa-md">
                         <!-- Segunda columna --><br />
-                        <fieldset>
+                        <fieldset style="border: 2px solid #000000">
                             <br /><br /><br /><br />
                             <div class="q-gutter-sm">
                                 <label class="label"> Titulo Breve del Anuncio</label>
@@ -156,7 +198,6 @@
 export default {
     data() {
         return {
-            prompt: false, // Asegúrate de que esté inicializada en false
             selectedOption: null,
             options: [
                 'Android', 'Windows', 'Ios',],
@@ -261,5 +302,4 @@ export default {
   
   */
 </style>
-    
     
