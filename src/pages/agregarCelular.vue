@@ -8,7 +8,7 @@
         <!--  Ventana emergente como card -->
 
         <q-card class="col-md-6 col-12 q-pa-md">
-
+            <form @submit.prevent.stop="onSubmit" @reset.prevent.stop="onReset" class="q-gutter-md">
             <q-card-section>
                 <div class="text-h6">
                     <center><label class="label">NUEVO ANUNCIO</label></center>
@@ -19,7 +19,7 @@
                 <div class="row">
                     <div class="col-md-6 col-12 q-pa-md">
                         <!-- Primera columna -->
-
+                       
 
                         <!-- Carrusel para cuando este sea responsive -->
                         <div v-if="$q.screen.lt.md" class="q-gutter-md">
@@ -59,31 +59,34 @@
                         <!-- Botón estático en pantallas más grandes -->
 
                         <fieldset style="border: 2px solid #000000" class="q-gutter-">
-                            <div class="q-gutter-sm">
-
-                                <div class="input-group">
-                                    <br><br>
-                                    <label class="label">Estado:</label>
-                                    <q-radio v-model="opcion" val="usado" label="Usado" outlined dense />
-                                    <q-radio v-model="opcion" val="nuevo" label="Nuevo" outlined dense />
-                                </div>
-                            </div>
-
+                        
                             <div class="col-md-6 col-;g12 q-pa-md">
                                 <br>
                                 <div class="input-group">
+                                    <br><br>
+                                    <label class="label">  Estado:</label>
+                                    <q-radio v-model="opcion" val="usado" label="Usado" outlined dense />
+                                    <q-radio v-model="opcion" val="nuevo" label="Nuevo" outlined dense />
+                                </div>
+                                <div class="input-group">
                                     <label class="label">Marca:</label>
                                     <q-input v-model="marca" outlined dense @keyup.enter="prompt = false"
-                                        style=" border: 2px solid #00000098 ; " />
+                                        style=" border: 2px solid #00000098 ; "  />
                                 </div>
 
                                 <div class="input-group">
                                     <label class="label">Modelo:</label>
                                     <q-input v-model="modelo" outlined dense @keyup.enter="prompt = false"
+                                        style=" border: 2px solid #00000098 ; " /><label class="label">Pulgadas</label> 
+                                </div>
+
+                                 <div class="input-group">
+                                    <label class="label">Pantalla:</label>
+                                    <q-input v-model="pantalla" outlined dense @keyup.enter="prompt = false"
                                         style=" border: 2px solid #00000098 ; " />
                                 </div>
                                 <div class="input-group">
-                                    <label>Marca:</label>
+                                    <label class="label">Sistema:</label>
                                     <q-select label="" transition-show="scale" transition-hide="scale" filled
                                         v-model="selectedOption" :options="options" style=" border: 2px solid #00000098 ;"
                                         @keyup.enter="prompt = false" />
@@ -91,7 +94,8 @@
                                 <div class="input-group">
                                     <label class="label">ROM:</label>
                                     <q-input v-model="rum" label="" outlined dense @keyup.enter="prompt = false"
-                                        style=" border: 2px solid #00000098 ; " />
+                                        style=" border: 2px solid #00000098 ; " />   <div v-if="$q.screen.gt.md" class="q-gutter-md">
+                                            <label class="label">Almacenamiento Interno</label></div>
                                 </div>
                                 <div class="input-group">
                                     <label class="label">RAM:</label>
@@ -182,12 +186,32 @@
                         </fieldset>
 
                         <q-card-actions align="center" class="text-primary">
-                            <q-btn label="Cancel" v-close-popup icon="highlight_off" color="accent" />
-                            <q-btn label="Crear" @click="addAddress" icon="save_as" color="accent" />
+                            <q-btn label="Cancel"  color="accent" @click="paginainicio"/>
+                            <q-btn label="Crear" @click="persistent = true" icon="save_as" color="accent" />
+                                                
+
+                        <q-dialog v-model="persistent" persistent transition-show="scale" transition-hide="scale">
+                        <q-card class="bg-teal text-white" style="width: 300px">
+                            <q-card-section>
+                            <div class="text-h6">Informacion</div>
+                            </q-card-section>
+
+                            <q-card-section class="q-pt-none">
+                                Se guardo satisfactoriamente.
+                            </q-card-section>
+
+                            <q-card-actions align="right" class="bg-white text-teal">
+                            <q-btn flat label="OK"  @click="paginainicio" />
+                            </q-card-actions>
+                        </q-card>
+                        </q-dialog>
+
                         </q-card-actions>
                     </div>
                 </div>
+                
             </q-card-section>
+        </form>
         </q-card>
 
     </q-page>
@@ -195,28 +219,36 @@
 </template>
     
 <script>
+
 export default {
     data() {
         return {
-            selectedOption: null,
-            options: [
-                'Android', 'Windows', 'Ios',],
+            
             opcion: "usado", // Valor predeterminado seleccionado en los radios
-            marca: "", // Valor inicial de la marca
-            modelo: "", // Valor inicial del modelo}
-            rum: "",
-            ram: "",
-            titulobreve: "",
-            vendedor: "",
-            descripcion: "",
-            precio: "",
+            marca: "Iphone 12", // Valor inicial de la marca
+            modelo: "6 plus", // Valor inicial del modelo}
+            pantalla:"5.5",
+            selectedOption: "Ios",
+            options: ['Android', 'Windows', 'Ios',],
+            rum: "64 GB",
+            ram: "2 GB",
+            titulobreve: "Iphone 6 pantalla de 8 pulgadas, 64Gb internos.",
+            vendedor: "Juan Perez",
+            telefono: "2123-1212 ",
+            descripcion: "Telefono en buenas condiciones, tiene dos camaras.",
+            precio: "$235.00",
             imagenes: [],
             uploadedFiles: [], // Lista de archivos cargados
             customFileList: [], // Lista personalizada de archivos para mostrar información adicional
             slide: (1),
+            persistent:false,
+            
+    
 
         };
     },
+
+    
     methods: {
         submitForm() {
             // Maneja el envío del formulario aquí
@@ -226,7 +258,19 @@ export default {
 
         },
 
+        paginainicio () {
+      // Utiliza el método push de Vue Router para navegar a la página deseada
+      this.direccionandoainicio(); 
+      },
+
+    direccionandoainicio() {
+      // redireccionamiento a través de Vue Router.
+      this.$router.push({ path: '/inicio' });
     },
+
+    },
+
+    
 
 
 };
