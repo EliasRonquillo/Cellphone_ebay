@@ -1,27 +1,43 @@
 <template>
   <div></div>
   <q-page :style-fn="myTweak" padding>
-    <div class="row">
-      <div class="col-2">
+    <!--PARA PANTALLAS MÁS GRANDES-->
+    <div class="row gt-sm">
+      <div class="col 12 col-md-2">
         <q-toggle v-model="value" color="accent" label="Nuevo" />
         <fieldset>
+          >
           <legend>Marca</legend>
           <div class="q-pr-xl">
-            <q-checkbox val="secondary" label="Samsung (40)" color="secondary" />
+            <q-checkbox
+              val="secondary"
+              label="Samsung (40)"
+              color="secondary"
+            />
             <q-checkbox val="secondary" label="Huawei (40)" color="secondary" />
             <q-checkbox val="secondary" label="Nokia (40)" color="secondary" />
             <q-checkbox val="secondary" label="IPhone (40)" color="secondary" />
             <q-checkbox val="secondary" label="Xiaomi (40)" color="secondary" />
           </div>
         </fieldset>
+
         <fieldset>
           <legend>Sistema</legend>
           <div class="q-pr-xl">
-            <q-checkbox val="secondary" label="Android (40)" color="secondary" />
-            <q-checkbox val="secondary" label="Windows (40)" color="secondary" />
+            <q-checkbox
+              val="secondary"
+              label="Android (40)"
+              color="secondary"
+            />
+            <q-checkbox
+              val="secondary"
+              label="Windows (40)"
+              color="secondary"
+            />
             <q-checkbox val="secondary" label="IOS (40)" color="secondary" />
           </div>
         </fieldset>
+
         <fieldset>
           <legend>Pantalla</legend>
           <div class="q-pr-xl">
@@ -32,52 +48,308 @@
         </fieldset>
       </div>
 
+      <div class="col-12 col-md-10">
+        <div class="q-mx-md row items-start q-gutter-md">
+          <fieldset>
+            <div class="q-mx-md row items-center q-gutter-md">
+              <label>Precio:</label>
+              <q-input filled class="inputSmaller">
+                <template v-slot:prepend>
+                  <q-icon name="attach_money" />
+                </template>
+              </q-input>
+              <label>Hasta:</label>
+              <q-input filled class="inputSmaller">
+                <template v-slot:prepend>
+                  <q-icon name="attach_money" />
+                </template>
+              </q-input>
+            </div>
+          </fieldset>
+          <fieldset>
+            <div class="q-mx-md row items-center q-gutter-md">
+              <label>Ordenar por:</label>
+              <q-btn color="secondary">
+                <q-icon left size="2em" name="north" />
+                <div>Precio</div>
+              </q-btn>
+              <q-btn color="secondary" label="Fecha" />
+            </div>
+          </fieldset>
+        </div>
+        <div class="q-pa-md row items-start q-gutter-md">
+          <q-card class="my-card">
+            <img
+              src="https://i.blogs.es/8143a4/samsung-galaxy-j6-specifications-2/450_1000.webp"
+            />
+            <q-card-section>
+              <div class="text-h6" style="text-align: center">$132.00</div>
+              <div class="text-subtitle2" style="text-align: center">
+                Samsung J6, Pantalla de 5.5
+              </div>
+            </q-card-section>
+            <q-card-section class="q-pt-none">
+              {{ descripcion }}
+            </q-card-section>
+          </q-card>
 
+          <q-card class="my-card">
+            <img
+              src="https://i.blogs.es/8143a4/samsung-galaxy-j6-specifications-2/450_1000.webp"
+            />
+            <q-card-section>
+              <div class="text-h6" style="text-align: center">$132.00</div>
+              <div class="text-subtitle2" style="text-align: center">
+                Samsung J6, Pantalla de 5.5
+              </div>
+            </q-card-section>
+            <q-card-section class="q-pt-none">
+              {{ descripcion }}
+            </q-card-section>
+          </q-card>
 
+          <q-card class="my-card">
+            <img
+              src="https://i.blogs.es/8143a4/samsung-galaxy-j6-specifications-2/450_1000.webp"
+            />
+            <q-card-section>
+              <div class="text-h6" style="text-align: center">$132.00</div>
+              <div class="text-subtitle2" style="text-align: center">
+                Samsung J6, Pantalla de 5.5
+              </div>
+            </q-card-section>
+            <q-card-section class="q-pt-none">
+              {{ descripcion }}
+            </q-card-section>
+          </q-card>
 
+          <q-card class="my-card">
+            <img
+              src="https://i.blogs.es/8143a4/samsung-galaxy-j6-specifications-2/450_1000.webp"
+            />
+            <q-card-section>
+              <div class="text-h6" style="text-align: center">$132.00</div>
+              <div class="text-subtitle2" style="text-align: center">
+                Samsung J6, Pantalla de 5.5
+              </div>
+            </q-card-section>
+            <q-card-section class="q-pt-none">
+              {{ descripcion }}
+            </q-card-section>
+          </q-card>
+
+          <q-card class="my-card">
+            <img
+              src="https://i.blogs.es/8143a4/samsung-galaxy-j6-specifications-2/450_1000.webp"
+            />
+            <q-card-section>
+              <div class="text-h6" style="text-align: center">$132.00</div>
+              <div class="text-subtitle2" style="text-align: center">
+                Samsung J6, Pantalla de 5.5
+              </div>
+            </q-card-section>
+            <q-card-section class="q-pt-none">
+              {{ descripcion }}
+            </q-card-section>
+          </q-card>
+
+          <q-card class="my-card">
+            <img
+              src="https://i.blogs.es/8143a4/samsung-galaxy-j6-specifications-2/450_1000.webp"
+            />
+            <q-card-section>
+              <div class="text-h6" style="text-align: center">$132.00</div>
+              <div class="text-subtitle2" style="text-align: center">
+                Samsung J6, Pantalla de 5.5
+              </div>
+            </q-card-section>
+            <q-card-section class="q-pt-none">
+              {{ descripcion }}
+            </q-card-section>
+          </q-card>
+
+          <q-card class="my-card">
+            <img
+              src="https://i.blogs.es/8143a4/samsung-galaxy-j6-specifications-2/450_1000.webp"
+            />
+            <q-card-section>
+              <div class="text-h6" style="text-align: center">$132.00</div>
+              <div class="text-subtitle2" style="text-align: center">
+                Samsung J6, Pantalla de 5.5
+              </div>
+            </q-card-section>
+            <q-card-section class="q-pt-none">
+              {{ descripcion }}
+            </q-card-section>
+          </q-card>
+
+          <q-card class="my-card">
+            <img
+              src="https://i.blogs.es/8143a4/samsung-galaxy-j6-specifications-2/450_1000.webp"
+            />
+            <q-card-section>
+              <div class="text-h6" style="text-align: center">$132.00</div>
+              <div class="text-subtitle2" style="text-align: center">
+                Samsung J6, Pantalla de 5.5
+              </div>
+            </q-card-section>
+            <q-card-section class="q-pt-none">
+              {{ descripcion }}
+            </q-card-section>
+          </q-card>
+        </div>
+        <div class="row">
+          <div class="col">
+            <q-pagination
+              v-model="current"
+              max="8"
+              direction-links
+              gutter="20px"
+              class="q-mt-md"
+            />
+          </div>
+          <div class="col">
+            <div class="q-pa-md row items-start q-gutter-md">
+              <label>Articulos por página</label>
+              <q-select
+                outlined
+                v-model="model"
+                class="inputSmaller"
+                :options="options"
+              ></q-select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--PARA PANTALLAS MÁS PEQUEÑAS-->
+    <!--ORDENAR POR-->
+    <div class="row lt-md">
+      <div class="col" style="margin-left: auto; margin-right: auto">
+        <fieldset style="text-align: center">
+          <label>Ordenar por:</label>
+          <q-btn-dropdown color="secondary" label="Precio" class="q-mx-xs">
+            <q-list>
+              <q-item clickable v-close-popup @click="onItemClick">
+                <q-item-section>
+                  <q-item-label>Precio</q-item-label>
+                </q-item-section>
+              </q-item>
+
+              <q-item clickable v-close-popup @click="onItemClick">
+                <q-item-section>
+                  <q-item-label>Fecha</q-item-label>
+                </q-item-section>
+              </q-item>
+            </q-list>
+          </q-btn-dropdown>
+        </fieldset>
+        <!--BOTON PARA EL FILTRO-->
+      </div>
+      <div class="col">
+        <q-btn
+          class="q-mx-xl q-mt-md"
+          flat
+          @click="drawer = !drawer"
+          round
+          dense
+          icon="filter_alt"
+        />
+      </div>
+    </div>
+    <!--CARTAS DE LOS CELULARES-->
+    <div class="row lt-md justify center">
+      <!--CARTA UNO-->
+      <div class="q-ma-none" style="margin-left: auto; margin-right: auto">
+        <q-card class="my-card" style="width: 125px">
+          <img
+            src="https://i.blogs.es/8143a4/samsung-galaxy-j6-specifications-2/450_1000.webp"
+          />
+          <q-card-section>
+            <div class="text-h6" style="text-align: center">$132.00</div>
+            <div class="text-subtitle2" style="text-align: center">
+              Samsung J6, Pantalla de 5.5
+            </div>
+          </q-card-section>
+          <q-card-section class="q-pt-none" style="text-align: center">
+            {{ descripcion }}
+          </q-card-section>
+        </q-card>
+      </div>
+      <!--CARTA DOS-->
+      <div class="q-ma-none" style="margin-left: auto; margin-right: auto">
+        <q-card class="my-card" style="width: 125px">
+          <img
+            src="https://i.blogs.es/8143a4/samsung-galaxy-j6-specifications-2/450_1000.webp"
+          />
+          <q-card-section>
+            <div class="text-h6" style="text-align: center">$132.00</div>
+            <div class="text-subtitle2" style="text-align: center">
+              Samsung J6, Pantalla de 5.5
+            </div>
+          </q-card-section>
+          <q-card-section class="q-pt-none" style="text-align: center">
+            {{ descripcion }}
+          </q-card-section>
+        </q-card>
+      </div>
+      <!--CARTA TRES-->
+      <div class="q-ma-none" style="margin-left: auto; margin-right: auto">
+        <q-card class="my-card q-ma-none" style="width: 125px">
+          <img
+            src="https://i.blogs.es/8143a4/samsung-galaxy-j6-specifications-2/450_1000.webp"
+          />
+          <q-card-section>
+            <div class="text-h6" style="text-align: center">$132.00</div>
+            <div class="text-subtitle2" style="text-align: center">
+              Samsung J6, Pantalla de 5.5
+            </div>
+          </q-card-section>
+          <q-card-section class="q-pt-none" style="text-align: center">
+            {{ descripcion }}
+          </q-card-section>
+        </q-card>
+      </div>
+      <!--CARTA CUATRO-->
+      <div class="q-ma-none" style="margin-left: auto; margin-right: auto">
+        <q-card class="my-card q-ma-none" style="width: 125px">
+          <img
+            src="https://i.blogs.es/8143a4/samsung-galaxy-j6-specifications-2/450_1000.webp"
+          />
+          <q-card-section>
+            <div class="text-h6" style="text-align: center">$132.00</div>
+            <div class="text-subtitle2" style="text-align: center">
+              Samsung J6, Pantalla de 5.5
+            </div>
+          </q-card-section>
+          <q-card-section class="q-pt-none" style="text-align: center">
+            {{ descripcion }}
+          </q-card-section>
+        </q-card>
+      </div>
+    </div>
+    <div class="row lt-md">
+      <div class="col q-ma-md flex flex-center">
+        <q-pagination
+          v-model="current"
+          max="4"
+          direction-links
+          flat
+          color="grey"
+          active-color="secondary"
+        />
+      </div>
     </div>
   </q-page>
 </template>
-  
-<script>
-export default {
-  data() {
-    return {
-      prompt: false, // Asegúrate de que esté inicializada en false
-      selectedOption: null,
-      options: [
-        'Android', 'Windows', 'Ios',],
-      opcion: "usado", // Valor predeterminado seleccionado en los radios
-      marca: "", // Valor inicial de la marca
-      modelo: "", // Valor inicial del modelo}
-      rum: "",
-      ram: "",
-      titulobreve: "",
-      vendedor: "",
-      descripcion: "",
-      precio: "",
-      imagenes: [],
-      uploadedFiles: [], // Lista de archivos cargados
-      customFileList: [], // Lista personalizada de archivos para mostrar información adicional
-      slide: (1),
 
-    };
-  },
-  methods: {
-    submitForm() {
-      // Maneja el envío del formulario aquí
-    },
-
-    agregarDireccion() {
-
-    },
-
-  },
-
-
-};
+<script setup>
+import { ref } from "vue";
+const descripcion = "64GB, 2GB Ram, Color Negro";
+const options = [25, 26, 27, 28, 29];
+const current = ref(1);
 </script>
-  
+
 <style lang="scss" scoped>
 .my-card {
   width: 100%;
@@ -86,63 +358,9 @@ export default {
 
 .inputSmaller {
   width: 100px;
-  height: 5px;
 }
 
-
-
-
-.ventanaemergente {
-  max-width: none;
-  min-width: none;
-  min-height: none;
-  width: 1200px;
-  height: 800px;
+.inputPosition {
+  margin: 0 auto;
 }
-
-
-
-
-
-.input-group {
-  display: flex;
-  align-items: center;
-  margin-bottom: 1px;
-
-}
-
-.label {
-  margin-right: 10px;
-  /* Agrega margen a la derecha de la etiqueta para separarla de la caja de texto */
-  font-weight: bold;
-  font-size: 18px;
-
-}
-
-
-/* Estilos para pantallas medianas y grandes pero con scc
-
-@media screen and (max-width: 768px) {
-  .ventanaemergente {
-    max-width: 100%;
-    width: 100%;
-    padding: 20px;
-  }
-
-
-}
-Estilos para pantallas medianas y grandes
-@media screen and (min-width: 769px) {
-  .ventanaemergente {
-    max-width: none;
-    min-width: none;
-    min-height: none;
-    width: 1200px;
-    height: 800px;
-  }
-
-}
-
-*/
 </style>
-  
