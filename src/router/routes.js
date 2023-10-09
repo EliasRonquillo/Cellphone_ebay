@@ -20,6 +20,19 @@ const routes = [
       { path: "", component: () => import("pages/detalleCelular.vue") },
     ],
   },
+  {
+    path: "/agregar",
+    component: () => import("layouts/InicioLayout.vue"),
+    children: [
+      { path: "", component: () => import("pages/agregarCelular.vue") },
+    ],
+  },
+
+  {
+    path: "/inicio",
+    component: () => import("layouts/InicioLayout.vue"),
+    children: [{ path: "", component: () => import("pages/PaginaInicio.vue") }],
+  },
 
   // Always leave this as last one,
   // but you can also remove it
