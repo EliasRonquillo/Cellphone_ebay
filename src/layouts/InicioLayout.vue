@@ -24,7 +24,7 @@
 
         <div class="q-px-xl gt-sm">
           <q-btn color="primary" label="Inicio" @click="paginainicio" />
-          <q-btn color="primary" label="Estadisticas" />
+          <q-btn color="primary" label="Estadisticas"  @click="paginaestadistica"/>
         </div>
 
         <div class="q-px-xl gt-sm">
@@ -90,6 +90,7 @@ const menuList = [
   {
     label: "Inicio",
     separator: true,
+    
   },
   {
     label: "Nuevo anuncio",
@@ -118,10 +119,16 @@ export default {
       // Utiliza el método push de Vue Router para navegar a la página deseada
       router.push("/inicio");
     };
+    
+    const paginaestadistica = () => {
+      // Utiliza el método push de Vue Router para navegar a la página deseada
+      router.push("/estadistica");
+    };
 
     return {
       paginaexterna,
       paginainicio,
+      paginaestadistica,
       drawer: ref(false),
       menuList,
     };

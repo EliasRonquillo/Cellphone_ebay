@@ -37,6 +37,14 @@ const routes = [
     ],
   },
 
+  {
+    path: "/estadistica",
+    component: () => import("layouts/InicioLayout.vue"),
+    children: [
+      { path: "", component: () => import("pages/estadisticaCelular.vue") },
+    ],
+  },
+
   // Always leave this as last one,
   // but you can also remove it
   {
