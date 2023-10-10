@@ -67,14 +67,17 @@
             </div>
           </fieldset>
           <fieldset>
-            <div class="q-mx-md row items-center q-gutter-md">
+            <div class="q-mx-md row items-center q-gutter-md ">
+              <br><br>
               <label>Ordenar por:</label>
               <q-btn color="secondary">
                 <q-icon left size="2em" name="north" />
+                <br>
                 <div>Precio</div>
               </q-btn>
               <q-btn color="secondary" label="Fecha" />
             </div>
+            <br>
           </fieldset>
         </div>
         <div class="q-pa-md row items-start q-gutter-md">

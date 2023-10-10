@@ -62,9 +62,12 @@
               <q-item-section avatar>
                 <q-icon :name="menuItem.icon" />
               </q-item-section>
-              <q-item-section>
-                {{ menuItem.label }}
-              </q-item-section>
+
+              
+              <q-item-section @click="handleMenuItemClick(menuItem)">
+  {{ menuItem.label }}
+</q-item-section>
+              
             </q-item>
             <q-separator :key="'sep' + index" v-if="menuItem.separator" />
           </template>
@@ -86,15 +89,18 @@ const menuList = [
     icon: "campaign",
     label: "Tienda Cellphone",
     separator: true,
+   
   },
   {
     label: "Inicio",
     separator: true,
     
+    
   },
   {
     label: "Nuevo anuncio",
     separator: true,
+
   },
   {
     label: "Carrito",
@@ -133,6 +139,26 @@ export default {
       menuList,
     };
   },
+
+// eventos dentro de los metodos para direccionar paginas
+  methods: {
+    handleMenuItemClick(menuItem) {
+    
+
+      if (menuItem.label === 'Inicio') {
+        this.$router.push('/inicio');
+      }
+
+      if (menuItem.label === 'Nuevo anuncio') {
+        this.$router.push('/agregar');
+      }
+     
+      if (menuItem.label === 'Estadísticas') {
+        this.$router.push('/estadistica');
+      }
+      // Otras acciones según sea necesario
+    }
+  }
 };
 
 </script>
