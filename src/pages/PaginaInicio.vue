@@ -67,34 +67,34 @@
             </div>
           </fieldset>
           <fieldset>
-            <div class="q-mx-md row items-center q-gutter-md ">
-              <br><br>
+            <div class="q-mx-md row items-center q-gutter-md">
+              <br /><br />
               <label>Ordenar por:</label>
               <q-btn color="secondary">
                 <q-icon left size="2em" name="north" />
-                <br>
+                <br />
                 <div>Precio</div>
               </q-btn>
               <q-btn color="secondary" label="Fecha" />
             </div>
-            <br>
+            <br />
           </fieldset>
         </div>
         <div class="q-pa-md row items-start q-gutter-md">
-          
-          
-          
-         <q-card class="my-card" @click="paginadetalle">
-    <img src="https://i.blogs.es/8143a4/samsung-galaxy-j6-specifications-2/450_1000.webp" />
-    <q-card-section>
-      <div class="text-h6" style="text-align: center">$132.00</div>
-      <div class="text-subtitle2" style="text-align: center">Samsung J6, Pantalla de 5.5</div>
-    </q-card-section>
-    <q-card-section class="q-pt-none">
-      {{ descripcion }}
-    </q-card-section>
-  </q-card>
-
+          <q-card class="my-card" @click="paginadetalle">
+            <img
+              src="https://i.blogs.es/8143a4/samsung-galaxy-j6-specifications-2/450_1000.webp"
+            />
+            <q-card-section>
+              <div class="text-h6" style="text-align: center">$132.00</div>
+              <div class="text-subtitle2" style="text-align: center">
+                Samsung J6, Pantalla de 5.5
+              </div>
+            </q-card-section>
+            <q-card-section class="q-pt-none">
+              {{ descripcion }}
+            </q-card-section>
+          </q-card>
 
           <q-card class="my-card" @click="paginadetalle">
             <img
@@ -298,7 +298,11 @@
       </div>
       <!--CARTA TRES-->
       <div class="q-ma-none" style="margin-left: auto; margin-right: auto">
-        <q-card class="my-card q-ma-none" style="width: 125px" @click="paginadetalle">
+        <q-card
+          class="my-card q-ma-none"
+          style="width: 125px"
+          @click="paginadetalle"
+        >
           <img
             src="https://i.blogs.es/8143a4/samsung-galaxy-j6-specifications-2/450_1000.webp"
           />
@@ -315,7 +319,11 @@
       </div>
       <!--CARTA CUATRO-->
       <div class="q-ma-none" style="margin-left: auto; margin-right: auto">
-        <q-card class="my-card q-ma-none" style="width: 125px" @click="paginadetalle">
+        <q-card
+          class="my-card q-ma-none"
+          style="width: 125px"
+          @click="paginadetalle"
+        >
           <img
             src="https://i.blogs.es/8143a4/samsung-galaxy-j6-specifications-2/450_1000.webp"
           />
@@ -346,7 +354,7 @@
   </q-page>
 </template>
 
-<script >
+<script>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 const descripcion = "64GB, 2GB Ram, Color Negro";
@@ -358,14 +366,13 @@ export default {
     const router = useRouter();
 
     // Función para navegar a la página de detalles
-    
+
     const paginadetalle = () => {
       router.push("/detalle");
     };
 
     return {
       paginadetalle,
-    
     };
   },
 };
@@ -377,15 +384,15 @@ export default {
   max-width: 250px;
 }
 
-  /* Estilo predeterminado de la tarjeta */
-  .my-card {
-    transition: transform 0.1s ease-in-out; /* Transición suave para el efecto */
-  }
+/* Estilo predeterminado de la tarjeta */
+.my-card {
+  transition: transform 0.1s ease-in-out; /* Transición suave para el efecto */
+}
 
-  /* Estilo cuando se pasa el mouse sobre la tarjeta */
-  .my-card:hover {
-    transform: scale(1.02); /*  */
-  }
+/* Estilo cuando se pasa el mouse sobre la tarjeta */
+.my-card:hover {
+  transform: scale(1.02); /*  */
+}
 
 .inputSmaller {
   width: 100px;
