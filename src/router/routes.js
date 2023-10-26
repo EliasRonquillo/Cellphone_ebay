@@ -11,8 +11,14 @@ const routes = [
   {
     path: "/",
     component: () => import("layouts/InicioLayout.vue"),
-    
-    children: [{ path: "",name: 'InicioLayout.vue', component: () => import("pages/PaginaInicio.vue") }],
+
+    children: [
+      {
+        path: "",
+        name: "unnombre",
+        component: () => import("pages/PaginaInicio.vue"),
+      },
+    ],
   },
   {
     path: "/detalle",
@@ -32,9 +38,7 @@ const routes = [
   {
     path: "/inicio",
     component: () => import("layouts/InicioLayout.vue"),
-    children: [
-      { path: "", component: () => import("pages/PaginaInicio.vue") },
-    ],
+    children: [{ path: "", component: () => import("pages/PaginaInicio.vue") }],
   },
 
   {
