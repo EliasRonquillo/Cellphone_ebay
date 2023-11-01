@@ -1,49 +1,9 @@
 <template>
   <q-page>
     <!--PARA PANTALLAS MÁS GRANDES-->
-    <div class="row">
+    <div class="row q-pa-md">
       <div class="col 12 col-md-2">
-        <q-toggle v-model="value" color="accent" label="Nuevo" />
-        <fieldset>
-          <legend>Marca</legend>
-          <div class="q-pr-xl">
-            <q-checkbox
-              val="secondary"
-              label="Samsung (40)"
-              color="secondary"
-            />
-            <q-checkbox val="secondary" label="Huawei (40)" color="secondary" />
-            <q-checkbox val="secondary" label="Nokia (40)" color="secondary" />
-            <q-checkbox val="secondary" label="IPhone (40)" color="secondary" />
-            <q-checkbox val="secondary" label="Xiaomi (40)" color="secondary" />
-          </div>
-        </fieldset>
-
-        <fieldset>
-          <legend>Sistema</legend>
-          <div class="q-pr-xl">
-            <q-checkbox
-              val="secondary"
-              label="Android (40)"
-              color="secondary"
-            />
-            <q-checkbox
-              val="secondary"
-              label="Windows (40)"
-              color="secondary"
-            />
-            <q-checkbox val="secondary" label="IOS (40)" color="secondary" />
-          </div>
-        </fieldset>
-
-        <fieldset>
-          <legend>Pantalla</legend>
-          <div class="q-pr-xl">
-            <q-checkbox val="secondary" label="6.0 (40)" color="secondary" />
-            <q-checkbox val="secondary" label="5.5 (40)" color="secondary" />
-            <q-checkbox val="secondary" label="5 (40)" color="secondary" />
-          </div>
-        </fieldset>
+        <FiltrosMenu></FiltrosMenu>
       </div>
 
       <div class="col-12 col-md-10">
@@ -122,14 +82,6 @@
               ></q-select>
             </div>
           </div>
-          <div>
-            <q-btn
-              color="primary"
-              icon="check"
-              label="anuncios"
-              @click="MostrarAnuncios"
-            />
-          </div>
         </div>
       </div>
     </div>
@@ -139,8 +91,9 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { db } from "boot/firebase";
-import { collection, addDoc } from "firebase/firestore";
+import { collection } from "firebase/firestore";
 import { useCollection } from "vuefire";
+import FiltrosMenu from "../components/FiltrosMenu.vue";
 import { connectStorageEmulator } from "firebase/storage";
 const a001 = ref(746645);
 
