@@ -3,21 +3,43 @@
     <!--PARA PANTALLAS MÁS GRANDES-->
     <div class="row q-pa-md">
       <div class="col 12 col-md-2">
+        <!--MENU DE FILTROS-->
         <FiltrosMenu></FiltrosMenu>
       </div>
 
       <div class="col-12 col-md-10">
         <div class="q-mx-md row items-start q-gutter-md">
-          <fieldset>
+          <fieldset class="q-ml-xl">
             <div class="q-mx-md row items-center q-gutter-md">
-              <label>Precio:</label>
-              <q-input filled class="inputSmaller">
+              <label>Desde:</label>
+              <q-input
+                filled
+                class="q-pa-none"
+                input-style="width: 50px;"
+                v-model="desde"
+                :rules="[
+                  (val) =>
+                    (val >= 0 && val !== '') || 'Ingrese una cantidad válida',
+                ]"
+                type="number"
+              >
                 <template v-slot:prepend>
                   <q-icon name="attach_money" />
                 </template>
               </q-input>
+
               <label>Hasta:</label>
-              <q-input filled class="inputSmaller">
+              <q-input
+                filled
+                class="q-pa-none"
+                input-style="width: 50px;"
+                v-model="hasta"
+                :rules="[
+                  (val) =>
+                    (val >= 0.0 && val !== '') || 'Ingrese una cantidad válida',
+                ]"
+                type="number"
+              >
                 <template v-slot:prepend>
                   <q-icon name="attach_money" />
                 </template>
@@ -25,17 +47,22 @@
             </div>
           </fieldset>
           <fieldset>
-            <div class="q-mx-md row items-center q-gutter-md">
+            <div class="q-mx-md row items-center q-gutter-md q-pa-sm">
               <br /><br />
               <label>Ordenar por:</label>
-              <q-btn color="secondary">
-                <q-icon left size="2em" name="north" />
-                <br />
-                <div>Precio</div>
-              </q-btn>
-              <q-btn color="secondary" label="Fecha" />
+              <q-btn
+                color="secondary"
+                icon="north"
+                label="Precio"
+                @click="onClick"
+              />
+              <q-btn
+                color="secondary"
+                icon="event"
+                label="Fecha"
+                @click="onClick"
+              />
             </div>
-            <br />
           </fieldset>
         </div>
 
@@ -99,6 +126,9 @@ const a001 = ref(746645);
 
 const options = [25, 26, 27, 28, 29];
 const current = ref(1);
+
+const desde = ref(0.0);
+const hasta = ref(0.0);
 
 const anuncios = useCollection(collection(db, "anuncios"));
 
