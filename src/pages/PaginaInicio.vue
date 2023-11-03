@@ -9,7 +9,8 @@
 
       <div class="col-12 col-md-10">
         <div class="q-mx-md row items-start q-gutter-md">
-          <fieldset class="q-ml-xl">
+          <fieldset class="q-mx-xs q-pa-xs">
+            <!--FILTROS DE PRECIO DESDE/HASTA  -->
             <div class="q-mx-md row items-center q-gutter-md">
               <label>Desde:</label>
               <q-input
@@ -27,7 +28,6 @@
                   <q-icon name="attach_money" />
                 </template>
               </q-input>
-
               <label>Hasta:</label>
               <q-input
                 filled
@@ -44,17 +44,25 @@
                   <q-icon name="attach_money" />
                 </template>
               </q-input>
+              <q-btn color="secondary" label="Filtrar" @click="FiltrarPrecio" />
+              <q-btn
+                color="secondary"
+                label="Limpiar"
+                @click="LimpiarFiltros"
+              />
             </div>
           </fieldset>
-          <fieldset>
-            <div class="q-mx-md row items-center q-gutter-md q-pa-sm">
+
+          <!--FILTRO PARA ORDENAR POR FECHA O POR PRECIO-->
+          <fieldset class="q-pa-sm">
+            <div class="q-mx-md row items-center q-gutter-md q-pa-xs">
               <br /><br />
               <label>Ordenar por:</label>
               <q-btn
                 color="secondary"
                 icon="north"
                 label="Precio"
-                @click="onClick"
+                @click="FiltrarPorPrecio"
               />
               <q-btn
                 color="secondary"
@@ -66,7 +74,7 @@
           </fieldset>
         </div>
 
-        <div class="row">
+        <div class="row q-ma-lg">
           <q-card
             class="my-card col-3"
             v-for="(item, index) in anuncios"
@@ -116,24 +124,82 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed, watch } from "vue";
 import { db } from "boot/firebase";
 import { collection } from "firebase/firestore";
 import { useCollection } from "vuefire";
 import FiltrosMenu from "../components/FiltrosMenu.vue";
+import { useDataStore } from "../stores/dataGlobal";
 import { connectStorageEmulator } from "firebase/storage";
-const a001 = ref(746645);
 
+const store = useDataStore();
 const options = [25, 26, 27, 28, 29];
 const current = ref(1);
-
 const desde = ref(0.0);
 const hasta = ref(0.0);
-
 const anuncios = useCollection(collection(db, "anuncios"));
+const HayFiltro = ref(false);
 
-function MostrarAnuncios() {
-  console.log(anuncios);
+//PROPIEDADES COMPUTADAS PARA SABER SI HAY FILTROS EN LA DATA GLOBAL PARA EL SISTEMA, PANTALLA Y MARCA.
+const HayFiltrosSistema = computed(() => {
+  return store.dataSistema.length;
+});
+
+const HayFiltrosMarca = computed(() => {
+  return store.dataMarca.length;
+});
+
+const HayFiltrosPantalla = computed(() => {
+  return store.dataPantalla.length;
+});
+
+watch(HayFiltrosMarca, (nuevo, viejo) => {
+  FiltrarPorMenu();
+});
+
+watch(HayFiltrosSistema, (nuevo, viejo) => {
+  FiltrarPorMenu();
+});
+
+watch(HayFiltrosPantalla, (nuevo, viejo) => {
+  FiltrarPorMenu();
+});
+
+function FiltrarPrecio() {
+  if (desde.value > 0 && hasta.value > 0) {
+    HayFiltro.value = true;
+    anuncios.value = anuncios.value.filter((item) => {
+      if (item.precio >= desde.value && item.precio <= hasta.value) {
+        return true;
+      } else {
+        return false;
+      }
+    });
+  }
+}
+
+function LimpiarFiltros() {}
+function FiltrarPorPrecio() {}
+
+function FiltrarPorMenu() {
+  if (
+    store.dataMarca.length > 0 ||
+    store.dataSistema.length > 0 ||
+    store.dataPantalla.length > 0
+  ) {
+    HayFiltro.value = true;
+    anuncios.value = anuncios.value.filter((item) => {
+      if (
+        store.dataMarca.includes(item.marca) ||
+        store.dataSistema.includes(item.sistema) ||
+        store.dataPantalla.includes(item.pantalla)
+      ) {
+        return true;
+      } else {
+        return false;
+      }
+    });
+  }
 }
 
 onMounted(() => {
