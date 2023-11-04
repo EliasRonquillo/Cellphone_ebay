@@ -12,7 +12,7 @@
         >
           <q-checkbox v-model="item.value" color="secondary">
             {{ item.label
-            }}<q-badge color="brown" floating class="q-mt-md q-mr-md">{{
+            }}<q-badge color="primary" floating class="q-mt-md q-mr-md">{{
               item.cantidad
             }}</q-badge>
           </q-checkbox>
@@ -31,7 +31,7 @@
         >
           <q-checkbox v-model="item.value" color="secondary">
             {{ item.label
-            }}<q-badge color="brown" floating class="q-mt-md q-mr-md">{{
+            }}<q-badge color="primary" floating class="q-mt-md q-mr-md">{{
               item.cantidad
             }}</q-badge>
           </q-checkbox>
@@ -49,7 +49,7 @@
           :key="'sis-' + key"
         >
           <q-checkbox v-model="item.value" color="secondary">
-            {{ item.tamanio }}
+            {{ item.label }}
           </q-checkbox>
         </q-item>
       </q-list>
@@ -60,14 +60,6 @@
           color="primary"
           label="Filtrar"
           @click="Filtrar"
-          class="q-mt-sm q-ml-sm"
-        />
-      </div>
-      <div class="col" align-items="center">
-        <q-btn
-          color="primary"
-          label="Limpiar"
-          @click="LimpiarFiltros"
           class="q-mt-sm q-ml-sm"
         />
       </div>
@@ -95,9 +87,9 @@ const sistemas = ref([
 ]);
 
 const pantallas = ref([
-  { value: false, tamanio: 6.0 },
-  { value: false, tamanio: 5.5 },
-  { value: false, tamanio: 5 },
+  { value: false, label: 6.0 },
+  { value: false, label: 5.5 },
+  { value: false, label: 5 },
 ]);
 
 function Filtrar() {
@@ -119,7 +111,7 @@ function Filtrar() {
 
   pantallas.value.forEach((item) => {
     if (item.value) {
-      filtroPantalla.push(item.tamanio);
+      filtroPantalla.push(item.label);
     }
   });
 

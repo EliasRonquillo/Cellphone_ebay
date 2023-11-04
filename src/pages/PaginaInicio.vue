@@ -68,7 +68,7 @@
                 color="secondary"
                 icon="event"
                 label="Fecha"
-                @click="onClick"
+                @click="FiltrarPorFecha"
               />
             </div>
           </fieldset>
@@ -179,7 +179,21 @@ function FiltrarPrecio() {
 }
 
 function LimpiarFiltros() {}
-function FiltrarPorPrecio() {}
+function FiltrarPorPrecio() {
+  anuncios.value.sort((a, b) => a.precio - b.precio);
+}
+
+function FiltrarPorFecha() {
+  anuncios.value.sort((a, b) => {
+    if (a.fecha < b.fecha) {
+      return -1;
+    }
+    if (a.fecha > b.fecha) {
+      return 1;
+    }
+    return 0;
+  });
+}
 
 function FiltrarPorMenu() {
   if (
