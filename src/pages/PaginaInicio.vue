@@ -178,7 +178,14 @@ function FiltrarPrecio() {
   }
 }
 
-function LimpiarFiltros() {}
+async function LimpiarFiltros() {
+  HayFiltro.value = false;
+  store.dataMarca = [];
+  store.dataSistema = [];
+  store.dataPantalla = [];
+  anuncios.value = [];
+}
+
 function FiltrarPorPrecio() {
   anuncios.value.sort((a, b) => a.precio - b.precio);
 }
