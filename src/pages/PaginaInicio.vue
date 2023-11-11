@@ -77,7 +77,7 @@
         <div class="row q-ma-lg">
           <q-card
             class="my-card col-3"
-            v-for="(item, index) in anuncios"
+            v-for="(item, index) in datosPaginados"
             :key="index"
           >
             <img
@@ -92,15 +92,20 @@
               </div>
             </q-card-section>
             <q-card-section class="q-pt-none">
-              {{ item.rom }}, {{ item.ram }}
+              <q-btn
+                color="primary"
+                label="detalles"
+                :to="'/detalle/' + item.id"
+              />
             </q-card-section>
           </q-card>
         </div>
         <div class="row">
           <div class="col">
             <q-pagination
-              v-model="current"
-              max="8"
+              v-model="actual"
+              @click="obtenerDataPagina(actual)"
+              :max="paginas(cuantosArticulos)"
               direction-links
               gutter="20px"
               class="q-mt-md"
@@ -111,9 +116,9 @@
               <label>Articulos por página</label>
               <q-select
                 outlined
-                v-model="model"
+                v-model="cuantosArticulos"
                 class="inputSmaller"
-                :options="options"
+                :options="elementosPorPagina"
               ></q-select>
             </div>
           </div>
@@ -124,21 +129,64 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed, watch } from "vue";
+import { ref, onMounted, onUpdated, computed, watch } from "vue";
 import { db } from "boot/firebase";
-import { collection } from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
 import { useCollection } from "vuefire";
 import FiltrosMenu from "../components/FiltrosMenu.vue";
 import { useDataStore } from "../stores/dataGlobal";
 import { connectStorageEmulator } from "firebase/storage";
 
 const store = useDataStore();
-const options = [25, 26, 27, 28, 29];
-const current = ref(1);
+const actual = ref(1);
 const desde = ref(0.0);
 const hasta = ref(0.0);
 const anuncios = useCollection(collection(db, "anuncios"));
+const anunciosSinFIltro = useCollection(collection(db, "anuncios"));
 const HayFiltro = ref(false);
+const elementosPorPagina = [4, 8, 12];
+const cuantosArticulos = ref(4);
+const datosPaginados = ref([]);
+
+onMounted(() => {
+  obtenerDataPagina(actual);
+  paginas(cuantosArticulos);
+  console.log("Mounted");
+});
+
+onUpdated(() => {
+  paginas(cuantosArticulos);
+  obtenerDataPagina(actual);
+  console.log("Updated");
+});
+
+function paginas(cuantosArticulos) {
+  if (cuantosArticulos == elementosPorPagina[0]) {
+    return Math.ceil(anuncios.value.length / elementosPorPagina[0]);
+  } else if (cuantosArticulos == elementosPorPagina[1]) {
+    return Math.ceil(anuncios.value.length / elementosPorPagina[1]);
+  } else if (cuantosArticulos == elementosPorPagina[2]) {
+    return Math.ceil(anuncios.value.length / elementosPorPagina[2]);
+  }
+}
+
+function obtenerDataPagina(nPagina) {
+  datosPaginados.value = [];
+  let init;
+  let fin;
+  if (cuantosArticulos.value == elementosPorPagina[0]) {
+    init = nPagina * elementosPorPagina[0] - elementosPorPagina[0];
+    fin = nPagina * elementosPorPagina[0];
+  } else if (cuantosArticulos.value == elementosPorPagina[1]) {
+    init = nPagina * elementosPorPagina[1] - elementosPorPagina[1];
+    fin = nPagina * elementosPorPagina[1];
+  } else if (cuantosArticulos.value == elementosPorPagina[2]) {
+    init = nPagina * elementosPorPagina[2] - elementosPorPagina[2];
+    fin = nPagina * elementosPorPagina[2];
+  }
+
+  datosPaginados.value = anuncios.value.slice(init, fin);
+}
 
 //PROPIEDADES COMPUTADAS PARA SABER SI HAY FILTROS EN LA DATA GLOBAL PARA EL SISTEMA, PANTALLA Y MARCA.
 const HayFiltrosSistema = computed(() => {
@@ -178,16 +226,26 @@ function FiltrarPrecio() {
   }
 }
 
-async function LimpiarFiltros() {
+function LimpiarFiltros() {
   HayFiltro.value = false;
   store.dataMarca = [];
   store.dataSistema = [];
   store.dataPantalla = [];
   anuncios.value = [];
+  anuncios.value = anunciosSinFIltro.value;
+  console.log(anunciosSinFIltro.value);
+  /*
+  const querySnapshot = await getDocs(collection(db, "anuncios"));
+  querySnapshot.forEach((doc) => {
+    //doc.data() is never undefined for query doc snapshots
+    anuncios.value = doc.data();
+    console.log(doc.id, " => ", doc.data());
+  });*/
+  //window.location.reload();
 }
 
 function FiltrarPorPrecio() {
-  anuncios.value.sort((a, b) => a.precio - b.precio);
+  anuncios.value = anuncios.value.sort((a, b) => a.precio - b.precio);
 }
 
 function FiltrarPorFecha() {
@@ -209,7 +267,7 @@ function FiltrarPorMenu() {
     store.dataPantalla.length > 0
   ) {
     HayFiltro.value = true;
-    anuncios.value = anuncios.value.filter((item) => {
+    datosPaginados.value = datosPaginados.value.filter((item) => {
       if (
         store.dataMarca.includes(item.marca) ||
         store.dataSistema.includes(item.sistema) ||
@@ -222,10 +280,6 @@ function FiltrarPorMenu() {
     });
   }
 }
-
-onMounted(() => {
-  console.log("Mounted");
-});
 </script>
 
 <style lang="scss" scoped>

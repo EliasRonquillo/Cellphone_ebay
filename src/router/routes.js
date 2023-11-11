@@ -15,36 +15,13 @@ const routes = [
     children: [
       {
         path: "",
-        name: "unnombre",
         component: () => import("pages/PaginaInicio.vue"),
       },
-    ],
-  },
-  {
-    path: "/detalle",
-    component: () => import("layouts/InicioLayout.vue"),
-    children: [
-      { path: "", component: () => import("pages/detalleCelular.vue") },
-    ],
-  },
-  {
-    path: "/agregar",
-    component: () => import("layouts/InicioLayout.vue"),
-    children: [
+      {
+        path: "detalle/:IDANUNCIO",
+        component: () => import("pages/detalleCelular.vue"),
+      },
       { path: "", component: () => import("pages/agregarCelular.vue") },
-    ],
-  },
-
-  {
-    path: "/inicio",
-    component: () => import("layouts/InicioLayout.vue"),
-    children: [{ path: "", component: () => import("pages/PaginaInicio.vue") }],
-  },
-
-  {
-    path: "/estadistica",
-    component: () => import("layouts/InicioLayout.vue"),
-    children: [
       { path: "", component: () => import("pages/estadisticaCelular.vue") },
     ],
   },

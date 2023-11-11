@@ -99,15 +99,31 @@ Telefono en muy buenas condiciones, tiene dos cámaras, la caja esta abierta, pe
 
 <script setup>
 import { ref, onMounted } from "vue";
-import { useCollection } from "vuefire";
-import { collection } from "firebase/firestore";
+import { db } from "boot/database";
+import { useRoute } from "vue-router";
+import { doc, getDoc } from "firebase/firestore";
 
-const anuncios = useCollection(collection(db, "anuncios"));
 const slide = ref(1);
+const route = useRoute();
+const articulo = ref({});
 
 onMounted(() => {
-  console.log("Mounted");
+  obtenerArticulo();
+  console.log(route.params.IDANUNCIO);
 });
+
+async function obtenerArticulo() {
+  const docRef = doc(db, "anuncios", route.params.IDANUNCIO);
+  const docSnap = await getDoc(docRef);
+
+  if (docSnap.exists()) {
+    console.log("Document data:", docSnap.data());
+    articulo.value = docSnap.data();
+  } else {
+    // docSnap.data() will be undefined in this case
+    console.log("No such document!");
+  }
+}
 </script>
 
 <style lang="scss" scoped>
