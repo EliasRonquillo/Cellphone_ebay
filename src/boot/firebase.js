@@ -3,7 +3,8 @@ import { boot } from "quasar/wrappers";
 
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
-import { VueFire } from "vuefire";
+import { getStorage } from "firebase/storage";
+import { VueFire } from 'vuefire'
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -20,7 +21,11 @@ const firebaseConfig = {
 };
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+
+// base de datos
 const db = getFirestore(app);
+//para imagenes
+const storage= getStorage(app);
 
 // "async" is optional;
 // more info on params: https://v2.quasar.dev/quasar-cli/boot-files
@@ -32,4 +37,4 @@ export default boot(({ app }) => {
   });
 });
 
-export { db };
+export { db,storage  };

@@ -9,7 +9,7 @@ const routes = [
   },
   */
   {
-    path: "/",
+    path: "/inicio",
     component: () => import("layouts/InicioLayout.vue"),
 
     children: [
@@ -21,8 +21,8 @@ const routes = [
         path: "detalle/:IDANUNCIO",
         component: () => import("pages/detalleCelular.vue"),
       },
-      { path: "", component: () => import("pages/agregarCelular.vue") },
-      { path: "", component: () => import("pages/estadisticaCelular.vue") },
+      { path: "/agregar", component: () => import("pages/agregarCelular.vue") },
+      { path: "/estadistica", component: () => import("pages/estadisticaCelular.vue") },
     ],
   },
 
