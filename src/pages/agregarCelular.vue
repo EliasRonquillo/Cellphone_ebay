@@ -221,7 +221,7 @@
 
                         <q-card-actions align="center" class="text-primary">
                             <q-btn label="Cancel" color="accent"  @click="paginainicio" />
-                            <q-btn label="Crear" :disable="!validarFormulario" @click="agregarAnuncio" icon="save_as" color="accent" />
+                            <q-btn label="Crear" :disable="!validarFormulario" @click="persistent" icon="save_as" color="accent" />
                            
                             <q-dialog v-model="dialogVisible" persistent transition-show="scale" transition-hide="scale">
                         <q-card class="bg-teal text-white" style="width: 300px">
@@ -391,6 +391,7 @@ async function agregarAnuncio() {
 const dialogVisible = ref(false);
 function persistent() {
   dialogVisible.value = true;
+  agregarAnuncio();
   // Configura un temporizador para ocultar el cuadro de diálogo después de 4 segundos
   setTimeout(() => {
     dialogVisible.value = false;
