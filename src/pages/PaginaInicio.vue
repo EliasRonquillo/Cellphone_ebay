@@ -154,12 +154,6 @@ const cuantosArticulos = ref(4);
 const datosPaginados = ref([]);
 const anunciosURL = ref([]);
 
-onMounted(() => {
-  obtenerDataPagina(actual);
-  paginas(cuantosArticulos);
-  console.log("Mounted");
-});
-
 onUpdated(() => {
   paginas(cuantosArticulos);
   obtenerDataPagina(actual);
@@ -319,6 +313,13 @@ function cargarImagenes() {
       });
   });
 }
+
+onMounted(() => {
+  cargarImagenes();
+  obtenerDataPagina(actual);
+  paginas(cuantosArticulos);
+  console.log("Mounted");
+});
 </script>
 
 <style lang="scss" scoped>
