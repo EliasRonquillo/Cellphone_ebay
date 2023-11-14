@@ -25,95 +25,131 @@
       </div>
     </q-img>
 
-    <q-img
-      src="https://elcomercio.pe/resizer/AX5niTVdSJkZq0wK9vAVoJ3tbSE=/580x330/smart/filters:format(jpeg):quality(90)/cloudfront-us-east-1.images.arcpublishing.com/elcomercio/DOYVVQECG5FN3O5KIDHXXKWBCQ.jpg"
-      spinner-color="white"
-      style="height: 170px; max-width: 300px"
-      img-class="my-custom-image"
-      class="rounded-borders"
-    >
-      <div class="absolute-bottom text-subtitle1 text-center">
-        <div v-if="datoswindows.length > 0">
-          <p>Dispositos Windows: {{ datoswindows.length }}</p>
-        </div>
-        <div v-else>
-          Cargando...
-        </div>
-      </div>
-    </q-img>
-
-    <q-img
-      src="https://img.freepik.com/fotos-premium/persona-que-usa-computadora-portatil-grafico-pantalla_853645-12052.jpg?w=360"
-      spinner-color="white"
-      style="height: 170px; max-width: 300px"
-      img-class="my-custom-image"
-      class="rounded-borders"
-    >
-      <div class="absolute-bottom text-subtitle1 text-center">
-        <div v-if="datosandroid.length > 0">
-          <p>Dispositos Android: {{ datosandroid.length }}</p>
-        </div>
-        <div v-else>
-          Cargando...
-        </div>
-      </div>
-    </q-img>
-
-    <q-img
-      src="https://www.iphones.ru/wp-content/uploads/2013/01/apple-580x362.png"
-      spinner-color="white"
-      style="height: 170px; max-width: 300px"
-      img-class="my-custom-image"
-      class="rounded-borders"
-    >
-      <div class="absolute-bottom text-subtitle1 text-center">
-        <div v-if="datosIOS.length > 0">
-          <p>Dispositos IOS: {{ datosIOS.length }}</p>
-        </div>
-        <div v-else>
-          Cargando...
-        </div>
-      </div>
-    </q-img>
-
 
 
   </div>
 
-      
-        
+    
       </div>
 
+
+      <q-card>
+      <div class="text-h6 text-center">Dispositos Registrados hasta la fecha</div>
+      <q-card-section>
+
+         <div class="row mt-3">
+          <div class="col-md-6 offset-3">
+            <div class="card border border-dark">
+              
+
+                  <q-card style="border: 1px solid black;  border-top: 14px solid black;">
+
+                     <canvas ref="barChart"></canvas>
+                     
+                  </q-card>
+
+                
+              </div>
+            </div>
+        </div>
+    </q-card-section>
+     </q-card>
    
+
+  
     </q-page-container>
   </q-page>
 </template>
 
 <script setup>
-import { db } from "src/boot/firebase";
-import { useCollection } from 'vuefire'
-import { collection, query, where } from 'firebase/firestore'
+import { ref, onMounted, watch } from 'vue';
+import { db } from 'src/boot/firebase';
+import { useCollection } from 'vuefire';
+import { collection, query, where } from 'firebase/firestore';
+import Chart from 'chart.js/auto';
 
-const { data: todos } = useCollection(collection(db, 'anuncios'));
+const barChart = ref(null);
+const todos = useCollection(collection(db, 'anuncios'));
 
-
-// Construir una consulta que filtra los documentos con sistema === 'Windows'
 const queryWindows = query(collection(db, 'anuncios'), where('sistema', '==', 'Windows'));
-const { data: datoswindows } = useCollection(queryWindows);// Obtener los datos de la colección con el filtro aplicado
+const datoswindows = useCollection(queryWindows);
 
-// Construir una consulta que filtra los documentos con sistema === 'Android'
 const queryAndroid = query(collection(db, 'anuncios'), where('sistema', '==', 'Android'));
-const { data: datosandroid } = useCollection(queryAndroid);// Obtener los datos de la colección con el filtro aplicado
+const datosandroid = useCollection(queryAndroid);
 
-// Construir una consulta que filtra los documentos con sistema === 'Android'
-const queryIOS= query(collection(db, 'anuncios'), where('sistema', '==', 'IOS'));
-const { data: datosIOS} = useCollection(queryIOS);// Obtener los datos de la colección con el filtro aplicado
+const queryIOS = query(collection(db, 'anuncios'), where('sistema', '==', 'IOS'));
+const datosIOS = useCollection(queryIOS);
+
+const windowsData = ref(0);
+const androidData = ref(0);
+const iosData = ref(0);
+
+onMounted(() => {
+  const createChart = () => {
+    const data = {
+      labels: ['Windows', 'Android', 'IOS'],
+      datasets: [
+        {
+          label: 'Dispositivos',
+          data: [windowsData.value, androidData.value, iosData.value],
+          backgroundColor: [
+            'rgb(148, 0, 211)',
+            'rgb(0, 191, 255)',
+            'rgb(50, 205, 50)',
+          ],
+          borderColor: 'dark',
+          borderWidth: 4,
+        },
+
+        
+      ],
+    };
+
+    const options = {
+      scales: {
+        y: {
+          beginAtZero: true,
+        },
+      },
+
+      plugins: {
+      legend: {
+        display: false,
+      },
+    },
+  };
+    const chart = new Chart(barChart.value, {
+      type: 'bar',
+      data: data,
+      options: options,
+    });
 
 
-console.log('Todos:', todos);
-console.log('Windows:', datoswindows);
-console.log('Android:', datosandroid);
-console.log('Android:', datosIOS);
+    const lineChart = new Chart(lineChart.value, {
+      type: 'line',
+      data: data,
+      options: options,
+    });
+    
 
+  };
 
+  watch([datoswindows, datosandroid, datosIOS], () => {
+    if (
+      datoswindows.value &&
+      datosandroid.value &&
+      datosIOS.value &&
+      datoswindows.value.length > 0 &&
+      datosandroid.value.length > 0 &&
+      datosIOS.value.length > 0 &&
+      todos.value.length > 0
+    ) {
+      windowsData.value = datoswindows.value.length;
+      androidData.value = datosandroid.value.length;
+      iosData.value = datosIOS.value.length;
+      createChart();
+      createLineChart();
+    }
+  });
+});
 </script>
