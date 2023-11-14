@@ -4,6 +4,12 @@
     <div class="row q-pa-md">
       <div class="col 12 col-md-2">
         <!--MENU DE FILTROS-->
+        <q-toggle
+          v-model="nuevo"
+          color="accent"
+          label="Nuevo"
+          @click="filtroNuevo"
+        />
         <FiltrosMenu></FiltrosMenu>
       </div>
 
@@ -80,9 +86,7 @@
             v-for="(item, index) in datosPaginados"
             :key="index"
           >
-            <img
-              src="https://i.blogs.es/8143a4/samsung-galaxy-j6-specifications-2/450_1000.webp"
-            />
+            <q-img :src="anunciosURL[key]" />
             <q-card-section>
               <div class="text-h6" style="text-align: center">
                 {{ item.precio }}
@@ -131,14 +135,15 @@
 <script setup>
 import { ref, onMounted, onUpdated, computed, watch } from "vue";
 import { db } from "boot/firebase";
-import { collection, getDocs } from "firebase/firestore";
+import { collection } from "firebase/firestore";
 import { useCollection } from "vuefire";
 import FiltrosMenu from "../components/FiltrosMenu.vue";
 import { useDataStore } from "../stores/dataGlobal";
-import { connectStorageEmulator } from "firebase/storage";
+import { ref as refStorage, getDownloadURL } from "firebase/storage";
 
 const store = useDataStore();
 const actual = ref(1);
+const nuevo = ref(false);
 const desde = ref(0.0);
 const hasta = ref(0.0);
 const anuncios = useCollection(collection(db, "anuncios"));
@@ -147,6 +152,7 @@ const HayFiltro = ref(false);
 const elementosPorPagina = [4, 8, 12];
 const cuantosArticulos = ref(4);
 const datosPaginados = ref([]);
+const anunciosURL = ref([]);
 
 onMounted(() => {
   obtenerDataPagina(actual);
@@ -159,6 +165,18 @@ onUpdated(() => {
   obtenerDataPagina(actual);
   console.log("Updated");
 });
+
+function filtroNuevo() {
+  if (nuevo.value) {
+    anuncios.value = anuncios.value.filter((item) => {
+      if (item.estado == "nuevo") {
+        return true;
+      } else {
+        return false;
+      }
+    });
+  }
+}
 
 function paginas(cuantosArticulos) {
   if (cuantosArticulos == elementosPorPagina[0]) {
@@ -227,6 +245,7 @@ function FiltrarPrecio() {
 }
 
 function LimpiarFiltros() {
+  /*
   HayFiltro.value = false;
   store.dataMarca = [];
   store.dataSistema = [];
@@ -234,6 +253,7 @@ function LimpiarFiltros() {
   anuncios.value = [];
   anuncios.value = anunciosSinFIltro.value;
   console.log(anunciosSinFIltro.value);
+  */
   /*
   const querySnapshot = await getDocs(collection(db, "anuncios"));
   querySnapshot.forEach((doc) => {
@@ -241,7 +261,7 @@ function LimpiarFiltros() {
     anuncios.value = doc.data();
     console.log(doc.id, " => ", doc.data());
   });*/
-  //window.location.reload();
+  window.location.reload();
 }
 
 function FiltrarPorPrecio() {
@@ -267,7 +287,7 @@ function FiltrarPorMenu() {
     store.dataPantalla.length > 0
   ) {
     HayFiltro.value = true;
-    datosPaginados.value = datosPaginados.value.filter((item) => {
+    anuncios.value = anuncios.value.filter((item) => {
       if (
         store.dataMarca.includes(item.marca) ||
         store.dataSistema.includes(item.sistema) ||
@@ -279,6 +299,25 @@ function FiltrarPorMenu() {
       }
     });
   }
+}
+
+function cargarImagenes() {
+  anunciosURL.value = [];
+  anuncios.value.forEach((item) => {
+    getDownloadURL(
+      refStorage(
+        storage,
+        `/anuncios/${item.id}/${item.id}_${Math.random()}.jpg`
+      )
+    )
+      .then((url) => {
+        anunciosURL.value.push(url);
+      })
+      .catch((error) => {
+        // Handle any errors
+        anunciosURL.value.push("");
+      });
+  });
 }
 </script>
 

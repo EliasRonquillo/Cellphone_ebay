@@ -1,6 +1,5 @@
 <template>
   <q-page>
-    <q-toggle v-model="value" color="accent" label="Nuevo" />
     <fieldset>
       <legend>Marca</legend>
       <q-list bordered separator>
