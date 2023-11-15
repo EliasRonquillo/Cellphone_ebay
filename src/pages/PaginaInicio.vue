@@ -82,27 +82,40 @@
 
         <div class="row q-ma-lg">
           <q-card
-            class="my-card col-3"
-            v-for="(item, index) in datosPaginados"
-            :key="index"
-          >
-            <q-img :src="anunciosURL[key]" />
-            <q-card-section>
-              <div class="text-h6" style="text-align: center">
-                {{ item.precio }}
-              </div>
-              <div class="text-subtitle2" style="text-align: center">
-                {{ item.marca }}, {{ item.modelo }}, {{ item.pantalla }}
-              </div>
-            </q-card-section>
-            <q-card-section class="q-pt-none">
-              <q-btn
-                color="primary"
-                label="detalles"
-                :to="'/detalle/' + item.id"
-              />
-            </q-card-section>
-          </q-card>
+  class="my-card col-3"
+  v-for="(item, index) in datosPaginados"
+  :key="index"
+>
+
+<center>
+<q-card-section class="q-pa-md">
+    <div
+      class="q-ma-xs q-pa-sm flex justify-center items-center"
+      style="max-width: 100px; max-height: 100px;"
+    >
+      <q-img :src="anunciosURL[index]" class="fit" />
+    </div>
+    <!-- Resto del contenido de la tarjeta -->
+  </q-card-section>
+</center>
+<!--fiin codigo-->
+  <q-card-section>
+    <div class="text-h6" style="text-align: center">
+      {{ item.precio }}
+    </div>
+    <div class="text-subtitle2" style="text-align: center">
+      {{ item.marca }}, {{ item.modelo }}, {{ item.pantalla }}
+    </div>
+  </q-card-section>
+  <q-card-section class="q-pt-none">
+    <q-btn
+      color="primary"
+      label="detalles"
+      :to="'/detalle/' + item.id"
+    />
+  </q-card-section>
+</q-card>
+
         </div>
         <div class="row">
           <div class="col">
@@ -134,12 +147,12 @@
 
 <script setup>
 import { ref, onMounted, onUpdated, computed, watch } from "vue";
-import { db } from "boot/firebase";
-import { collection } from "firebase/firestore";
 import { useCollection } from "vuefire";
 import FiltrosMenu from "../components/FiltrosMenu.vue";
 import { useDataStore } from "../stores/dataGlobal";
-import { ref as refStorage, getDownloadURL } from "firebase/storage";
+import { getDownloadURL, listAll, ref as refStorage  } from "firebase/storage";
+import { db, storage } from 'src/boot/firebase';
+import { collection, getDocs } from 'firebase/firestore';
 
 const store = useDataStore();
 const actual = ref(1);
@@ -295,31 +308,59 @@ function FiltrarPorMenu() {
   }
 }
 
-function cargarImagenes() {
-  anunciosURL.value = [];
-  anuncios.value.forEach((item) => {
-    getDownloadURL(
-      refStorage(
-        storage,
-        `/anuncios/${item.id}/${item.id}_${Math.random()}.jpg`
-      )
-    )
-      .then((url) => {
-        anunciosURL.value.push(url);
-      })
-      .catch((error) => {
-        // Handle any errors
-        anunciosURL.value.push("");
-      });
-  });
-}
+
 
 onMounted(() => {
-  cargarImagenes();
+
   obtenerDataPagina(actual);
   paginas(cuantosArticulos);
   console.log("Mounted");
 });
+
+
+
+//DATOS NECESARIOS PARA MOSTRAR IMAGEN
+const anunciosCollection = collection(db, 'anuncios');
+  const colecciones = ref([]);
+  let autoplay = ref(true);
+
+  //FUNCION PARA IMAGENES 
+  async function cargarColecciones() {
+  try {
+    const querySnapshot = await getDocs(anunciosCollection);
+    querySnapshot.forEach(async (doc) => {
+      const anuncioRef = refStorage(storage, `/anuncios/${doc.id}/`);
+      const items = await listAll(anuncioRef);
+
+      // Verificar si hay elementos en la carpeta
+      if (items.items.length > 0) {
+        const imageUrl = await getDownloadURL(items.items[0]); // Obtener solo la primera imagen
+
+        // Almacenar la URL de la imagen en anunciosURL
+        anunciosURL.value.push(imageUrl);
+
+       
+      } else {
+        // Si no hay imágenes en la carpeta, almacenar un valor vacío
+        anunciosURL.value.push(imageUrl);
+      }
+    });
+  } catch (error) {
+    console.error('Error cargando colecciones:', error);
+  }
+}
+
+  
+  onMounted(async () => {
+    try {
+      await cargarColecciones();
+    } catch (error) {
+      console.error('Error en el montaje:', error);
+    }
+  });
+
+
+  //FIN DE FUNCION!!!------------------------------------------------------------
 </script>
 
 <style lang="scss" scoped>
@@ -330,4 +371,5 @@ onMounted(() => {
 .inputPosition {
   margin: 0 auto;
 }
+
 </style>

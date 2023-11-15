@@ -23,6 +23,7 @@ const routes = [
       },
       { path: "/agregar", component: () => import("pages/agregarCelular.vue") },
       { path: "/estadistica", component: () => import("pages/estadisticaCelular.vue") },
+      { path: "/ejemplo", component: () => import("pages/EjemploImagenes.vue") },
     ],
   },
 
