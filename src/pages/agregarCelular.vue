@@ -255,7 +255,7 @@ import { ref as refStorage, uploadBytes, getDownloadURL, } from "firebase/storag
 
 
 const slide= ref(0);
-const options=  ['Android', 'Windows', 'Ios',];
+const options=  ['Android', 'Windows', 'IOS',];
 
 //variables del nuevo anuncio
 const nuevoAnuncio = ref({

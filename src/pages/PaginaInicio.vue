@@ -242,6 +242,7 @@ function FiltrarPrecio() {
         return false;
       }
     });
+    obtenerDataPagina(actual.value); // para que los filtros funcionen y se muestren en tiempo real
   }
 }
 
@@ -279,6 +280,7 @@ function FiltrarPorFecha() {
     }
     return 0;
   });
+  obtenerDataPagina(actual.value); // para que los filtros funcionen y se muestren en tiempo real
 }
 
 function FiltrarPorMenu() {
@@ -299,6 +301,7 @@ function FiltrarPorMenu() {
         return false;
       }
     });
+    obtenerDataPagina(actual.value); // para que los filtros funcionen y se muestren en tiempo real
   }
 }
 
@@ -345,6 +348,8 @@ const anunciosCollection = collection(db, 'anuncios');
   onMounted(async () => {
     try {
       await cargarColecciones();
+      obtenerDataPagina(actual.value);//  Se ponen en onMounted(asyn..) para que los datos se muestren automaticamente
+  paginas(cuantosArticulos.value); // 
     } catch (error) {
       console.error('Error en el montaje:', error);
     }
