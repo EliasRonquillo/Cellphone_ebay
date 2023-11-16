@@ -89,7 +89,7 @@
       <q-card-section class="q-pa-md">
         <!-- MAqui se muestra la imagen con relacion a la tarjeta -->
         <div class="q-ma-xs q-pa-sm flex justify-center items-center">
-          <q-img :src="item.imagen" class="fit" />
+          <q-img :src="item.imagen" class="fit"  style="max-width: 100px; max-height: 200px;"/>
         </div>
       </q-card-section>
 
@@ -325,14 +325,11 @@ const anunciosCollection = collection(db, 'anuncios');
     querySnapshot.forEach(async (doc) => {
       const anuncioRef = refStorage(storage, `/anuncios/${doc.id}/`); //obtenemos todas las subcarpetas
       const items = await listAll(anuncioRef); //aqui listamos todas las subcarpetas
-
       // Verificar si hay elementos en la carpeta orincipal
       if (items.items.length > 0) {
         const imageUrl = await getDownloadURL(items.items[0]); //Aqui es donde obtiene nada mas un item (solo la primer imagen)
-
         // Aqui se busca el id dependiendo de la tarjeta
         const index = anuncios.value.findIndex((anuncio) => anuncio.id === doc.id);
-
         // Si se encuentra el índice, asigna la URL de la imagen directamente al anuncio(card)
         if (index !== -1) {
           anuncios.value[index].imagen = imageUrl;
