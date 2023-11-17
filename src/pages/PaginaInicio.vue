@@ -91,7 +91,7 @@
 
         <div class="row q-ma-lg">
           <q-card
-            class="my-card col-3 first-card"
+            class="my-card col-3 tarejtaestilos"
             v-for="(item, index) in datosPaginados"
             :key="index"
            
@@ -503,8 +503,14 @@ const paginadetalle = (id) => {
   margin: 0 auto;
 }
 
-.first-card {
+.tarejtaestilos {
   border: 1px solid rgba(0, 0, 0, 0.4); /* Color del borde más oscuro */
   box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.1); /* Sombra más sutil */
+  transition: transform 0.3s ease;
+}
+
+.tarejtaestilos:hover {
+  transform: scale(0.95); /* Reducción ligeramente el tamaño al posicionar el cursor */
+ 
 }
 </style>
