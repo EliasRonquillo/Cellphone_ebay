@@ -89,6 +89,7 @@
                     </div>
                   </q-card-section>
                 </q-card>
+                <br>  <br>  <br>  <br>  <br>  <br>    <br>
               </div>
             </div>
           </div>
@@ -272,6 +273,12 @@ onMounted(() => {
 <style>
 /* Estilos opcionales para bordes y espaciado */
 .border {
-  border: 1px solid #ccc;
+  border: 1px solid #0a0808; /* Estilo del borde normal */
+  transition: transform 0.3s ease; /* Transición suave para el efecto de zoom */
+  margin: 10px;
+}
+
+.border:hover {
+  transform: scale(0.9); /* Aumenta ligeramente el tamaño al posicionar el cursor */
 }
 </style>
