@@ -36,7 +36,7 @@
               <div class="q-pa-md border text-center">
                 <!-- Contenido de celda 2 -->
                 <q-card class="text-center">
-                  <div class="text-h6">Dispositivos Registrados hasta la fecha</div>
+                  <div class="text-h6">Tipos de Dispositivos Registrados</div>
                   <q-card-section class="text-center">
                     <div class="row mt-3">
                       <div class="col-md-6 offset-md-3">
@@ -56,7 +56,7 @@
               <div class="q-pa-md border text-center">
                 <!-- Contenido de celda 3 -->
                 <q-card class="text-center">
-                  <div class="text-h6">Dispositivos Registrados hasta la fecha</div>
+                  <div class="text-h6">Dispositivos Usados y Nuevos</div>
                   <q-card-section class="text-center">
                     <div class="row mt-3">
                       <div class="col-md-6 offset-md-3">
@@ -121,9 +121,17 @@ const datosandroid = useCollection(queryAndroid);
 const queryIOS = query(collection(db, 'anuncios'), where('sistema', '==', 'IOS'));
 const datosIOS = useCollection(queryIOS);
 
+const queryNUEVOS = query(collection(db, 'anuncios'), where('estado', '==', 'nuevo'));
+const datosNUEVOS = useCollection(queryNUEVOS);
+
+const queryUSADOS = query(collection(db, 'anuncios'), where('estado', '==', 'usado'));
+const datosUSADOS = useCollection(queryUSADOS);
+
 const windowsData = ref(0);
 const androidData = ref(0);
 const iosData = ref(0);
+const nuevosData = ref(0);
+const usadosData = ref(0);
 
 const createBarChart = () => {
   const data = {
@@ -161,12 +169,12 @@ const createBarChart = () => {
 
 const createPieChart = () => {
   const data = {
-    labels: ['Windows', 'Android', 'IOS'],
+    labels: ['Nuevos', 'Usados'],
     datasets: [
       {
         label: 'Dispositivos',
-        data: [windowsData.value, androidData.value, iosData.value],
-        backgroundColor: ['rgb(148, 0, 211)', 'rgb(0, 191, 255)', 'rgb(50, 205, 50)'],
+        data: [nuevosData.value, usadosData.value],
+        backgroundColor: ['rgb(0, 139, 139)', 'rgb(72, 61, 139)'],
         borderColor: 'dark',
         borderWidth: 4,
       },
@@ -235,19 +243,26 @@ onMounted(() => {
     createLineChart();
   };
 
-  watch([datoswindows, datosandroid, datosIOS], () => {
+  watch([datoswindows, datosandroid, datosIOS,datosIOS,datosUSADOS], () => {
     if (
       datoswindows.value &&
       datosandroid.value &&
       datosIOS.value &&
+      datosNUEVOS.value &&
+      datosUSADOS.value &&
       datoswindows.value.length > 0 &&
       datosandroid.value.length > 0 &&
       datosIOS.value.length > 0 &&
+      datosNUEVOS.value.length > 0 &&
+      datosUSADOS.value.length > 0 &&
       todos.value.length > 0
     ) {
       windowsData.value = datoswindows.value.length;
       androidData.value = datosandroid.value.length;
       iosData.value = datosIOS.value.length;
+      nuevosData.value = datosNUEVOS.value.length;
+      usadosData.value = datosUSADOS.value.length;
+
       createCharts();
     }
   });

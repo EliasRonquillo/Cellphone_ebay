@@ -3,35 +3,25 @@
     <div class="row">
       <div class="col-md-6 col-12">
         <div class="col-sm-6 col-12">
-          <q-carousel
-            animated
-            v-model="slide"
-            arrows
-            navigation
-            infinite
-            class="col-sm-6 col-12"
-          >
-            <q-carousel-slide
-              :name="1"
-              img-src="https://www.cnet.com/a/img/resize/fa30df0ab174346771eef6924905c91bbfcb55ca/hub/2014/09/13/38d0b3b2-a123-4912-b950-9ea8aa18b6ba/xerxes-1708-033.jpg?auto=webp&width=768"
-            />
-            <q-carousel-slide
-              :name="2"
-              img-src="https://i.blogs.es/1a6888/650_1000_iphone-6-1/1366_2000.png"
-            />
-            <q-carousel-slide
-              :name="3"
-              img-src="https://cdn.computerhoy.com/sites/navi.axelspringer.es/public/media/image/2015/10/125097-autopsia-iphone-6s-todas-sus-piezas-componentes.jpg?tf=3840x"
-            />
-            <q-carousel-slide
-              :name="4"
-              img-src="https://media.wired.co.uk/photos/606db4f2e46630a583ab3127/master/w_1600%2Cc_limit/iPhone6main.jpg"
-            />
-          </q-carousel>
+         
+          
+       
+          <q-carousel v-for="(coleccion, index) in colecciones" :key="index"
+                  animated v-model="coleccion.slide" navigation infinite
+                  :autoplay="autoplay" arrows transition-prev="slide-right" transition-next="slide-left"
+                  @mouseenter="autoplay = false" @mouseleave="autoplay = true"
+                  >
+        <q-carousel-slide v-for="(imagen, i) in coleccion.imagenes" :key="i" :name="i" :img-src="imagen" />
+      </q-carousel>
+   
+      
         </div>
       </div>
 
+
+
       <div class="col-sm-12 col-12 col-md-6">
+        
         <div class="info">
           <h6>
             {{ articulo.marca }} {{ articulo.modelo }} pantalla de
@@ -92,19 +82,24 @@
         </div>
       </div>
     </div>
+   
   </q-card-section>
 </template>
 
 <script setup>
 import { ref, onMounted } from "vue";
-import { db } from 'src/boot/firebase';
+import { getDownloadURL, listAll, ref as refStorage } from 'firebase/storage';
+import { db, storage } from 'src/boot/firebase';
 import { useRoute } from "vue-router";
 import { doc, getDoc } from "firebase/firestore";
+import { collection, getDocs } from 'firebase/firestore';
 
-const slide = ref(1);
+
 const route = useRoute();
 const docRef = ref({});
 const articulo = ref({});
+
+//funcion para informacion
 
 async function obtenerArticulo() {
   docRef.value = doc(db, "anuncios", route.params.IDANUNCIO);
@@ -119,8 +114,49 @@ async function obtenerArticulo() {
   }
 }
 
-onMounted(() => {
+
+//datos importantes
+const anunciosCollection = collection(db, 'anuncios');
+const colecciones = ref([]);
+let autoplay = ref(true);
+
+//funcion para la busqueda de imagenes por ID
+async function cargarColecciones() {
+  try {
+    const idAnuncio = route.params.IDANUNCIO; // Se obtiene nada mas el ID 
+
+    const docRef = doc(anunciosCollection, idAnuncio);
+    const docSnapshot = await getDoc(docRef);
+
+    if (docSnapshot.exists()) { //Nada mas verifica si existe el ID(documento) en la coleccion de informacion
+      const anuncioRef = refStorage(storage, `/anuncios/${idAnuncio}/`);
+      const items = await listAll(anuncioRef);
+
+      const imagenes = [];
+      for (const imageRef of items.items) {
+        try {
+          const url = await getDownloadURL(imageRef);
+          imagenes.push(url);
+        } catch (error) {
+          console.error('Error obteniendo URL:', error);
+          imagenes.push('');
+        }
+      }
+
+      colecciones.value.push({ nombre: docSnapshot.id, imagenes, slide: 0 });
+    } else {
+      console.error('El documento con ID ' + idAnuncio + ' no existe');
+    }
+  } catch (error) {
+    console.error('Error cargando colecciones:', error);
+  }
+}
+
+
+
+onMounted(async() => {
   obtenerArticulo();
+  await cargarColecciones();
 });
 </script>
 
