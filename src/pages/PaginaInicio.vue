@@ -10,6 +10,13 @@
           label="Nuevo"
           @click="filtroNuevo"
         />
+        <q-btn
+          rounded
+          icon="cleaning_services"
+          color="secondary"
+          label="Limpiar filtros"
+          @click="LimpiarFiltros"
+        />
         <FiltrosMenu></FiltrosMenu>
       </div>
 
@@ -50,11 +57,11 @@
                   <q-icon name="attach_money" />
                 </template>
               </q-input>
-              <q-btn color="secondary" label="Filtrar" @click="FiltrarPrecio" />
               <q-btn
                 color="secondary"
-                label="Limpiar"
-                @click="LimpiarFiltros"
+                label="Filtrar"
+                @click="FiltrarPrecio"
+                rounded
               />
             </div>
           </fieldset>
@@ -65,12 +72,14 @@
               <br /><br />
               <label>Ordenar por:</label>
               <q-btn
+                rounded
                 color="secondary"
                 icon="north"
                 label="Precio"
                 @click="FiltrarPorPrecio"
               />
               <q-btn
+                rounded
                 color="secondary"
                 icon="event"
                 label="Fecha"
@@ -143,28 +152,26 @@
 
     <!--PARA PANTALLAS PEQUEÑAS-->
     <div class="row lt-md">
-      <div class="col" style="margin-left: auto; margin-right: auto">
+      <div class="col lt-md" style="margin-left: auto; margin-right: auto">
         <fieldset style="text-align: center" class="q-ml-md q-mt-md">
           <label>Ordenar por:</label>
-          <q-btn-dropdown color="secondary" label="Precio" class="q-mx-xs">
-            <q-list>
-              <q-item clickable v-close-popup @click="onItemClick">
-                <q-item-section>
-                  <q-item-label>Precio</q-item-label>
-                </q-item-section>
-              </q-item>
-              <q-item clickable v-close-popup @click="onItemClick">
-                <q-item-section>
-                  <q-item-label>Fecha</q-item-label>
-                </q-item-section>
-              </q-item>
-            </q-list>
-          </q-btn-dropdown>
+          <q-toggle
+            v-model="precio"
+            color="accent"
+            label="Precio"
+            @click="ordenarPorPP"
+          />
+          <q-toggle
+            v-model="fecha"
+            color="accent"
+            label="Fecha"
+            @click="ordenarPorPP"
+          />
         </fieldset>
       </div>
-      <div class="col">
+      <div class="col-3">
         <q-btn
-          class="q-ml-xl q-mt-lg lt-sm"
+          class="q-ml-xl q-mt-xl lt-sm"
           flat
           @click="drawer = !drawer"
           round
@@ -177,48 +184,78 @@
           :width="200"
           :breakpoint="500"
           bordered
-          :class="$q.dark.isActive ? 'bg-grey-9' : 'bg-grey-3'"
           class="lt-sm"
           side="right"
         >
+          <q-toggle
+            v-model="nuevo"
+            color="accent"
+            label="Nuevo"
+            @click="filtroNuevo"
+          />
           <FiltrosMenu></FiltrosMenu>
         </q-drawer>
       </div>
-      <div class="row">
-        <q-card
-          class="my-card col-6"
-          v-for="(item, index) in datosPaginados"
-          :key="index"
-        >
-          <q-card-section class="q-pa-md">
-            <!-- MAqui se muestra la imagen con relacion a la tarjeta -->
-            <div class="q-ma-xs q-pa-sm flex justify-center items-center">
-              <q-img
-                :src="item.imagen"
-                class="fit"
-                style="max-width: 100px; max-height: 200px"
-              />
-            </div>
-          </q-card-section>
-
-          <!-- Informacion de la tarjeta-->
-          <q-card-section>
-            <div class="text-h6" style="text-align: center">
-              {{ item.precio }}
-            </div>
-            <div class="text-subtitle2" style="text-align: center">
-              {{ item.marca }}, {{ item.modelo }}, {{ item.pantalla }}
-            </div>
-          </q-card-section>
-          <q-card-section class="q-pt-none">
-            <q-btn
-      color="primary"
-      label="detalles"
-      @click="paginadetalle(item.id)"
-    />
-          </q-card-section>
-        </q-card>
+      <div class="col-3 justify-center">
+        <q-btn
+          class="q-ml-md q-mt-xl lt-sm"
+          flat
+          @click="LimpiarFiltros"
+          round
+          dense
+          icon="cleaning_services"
+          size="lg"
+        />
       </div>
+    </div>
+    <div class="row lt-sm">
+      <q-card
+        class="my-card col-6"
+        v-for="(item, index) in datosPaginados"
+        :key="index"
+      >
+        <q-card-section class="q-pa-md">
+          <!-- MAqui se muestra la imagen con relacion a la tarjeta -->
+          <div class="q-ma-xs q-pa-sm flex justify-center items-center">
+            <q-img
+              :src="item.imagen"
+              class="fit"
+              style="max-width: 100px; max-height: 200px"
+            />
+          </div>
+        </q-card-section>
+
+        <!-- Informacion de la tarjeta-->
+        <q-card-section>
+          <div class="text-h6" style="text-align: center">
+            {{ item.precio }}
+          </div>
+          <div class="text-subtitle2" style="text-align: center">
+            {{ item.marca }}, {{ item.modelo }}, {{ item.pantalla }}
+          </div>
+        </q-card-section>
+        <q-card-section class="q-pt-none">
+          <q-btn color="primary" label="detalles" :to="'/detalle/' + item.id" />
+        </q-card-section>
+      </q-card>
+    </div>
+    <div class="row justify-center lt-sm">
+      <q-pagination
+        v-model="actual"
+        @click="obtenerDataPagina(actual)"
+        :max="paginas(cuantosArticulos)"
+        direction-links
+        gutter="20px"
+        class="q-mt-md"
+      />
+    </div>
+    <div class="row justify-center q-mt-md lt-sm">
+      <q-select
+        outlined
+        v-model="cuantosArticulos"
+        class="inputSmaller"
+        :options="elementosPorPagina"
+      ></q-select>
     </div>
   </q-page>
 </template>
@@ -231,6 +268,7 @@ import { useDataStore } from "../stores/dataGlobal";
 import { getDownloadURL, listAll, ref as refStorage } from "firebase/storage";
 import { db, storage } from "src/boot/firebase";
 import { collection, getDocs } from "firebase/firestore";
+import { useRouter } from "vue-router";
 
 const store = useDataStore();
 const actual = ref(1);
@@ -242,14 +280,19 @@ const HayFiltro = ref(false);
 const elementosPorPagina = [4, 8, 12];
 const cuantosArticulos = ref(4);
 const datosPaginados = ref([]);
+
+//VARIABLES PARA PANTALLAS PEQUEÑAS
 const drawer = ref(false);
+const precio = ref(false);
+const fecha = ref(false);
 
-onUpdated(() => {
-  paginas(cuantosArticulos);
-
-  obtenerDataPagina(actual);
-  console.log("Updated");
-});
+function ordenarPorPP() {
+  if (precio.value) {
+    FiltrarPorPrecio();
+  } else if (fecha.value) {
+    FiltrarPorFecha();
+  }
+}
 
 function filtroNuevo() {
   if (nuevo.value) {
@@ -434,11 +477,10 @@ onMounted(async () => {
 //FIN DE FUNCION!!!------------------------------------------------------------
 
 //funcion para redireccionar la pagina a detalle
-import { useRouter } from "vue-router";
 const router = useRouter();
 
 const paginadetalle = (id) => {
-  console.log('ID para la redirección:', id);
+  console.log("ID para la redirección:", id);
   router.push(`/detalle/${id}`);
 };
 </script>
