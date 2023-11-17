@@ -86,9 +86,9 @@ const sistemas = ref([
 ]);
 
 const pantallas = ref([
-  { value: false, label: 6.0 },
-  { value: false, label: 5.5 },
-  { value: false, label: 5 },
+  { value: false, label: "6" },
+  { value: false, label: "5.5" },
+  { value: false, label: "5" },
 ]);
 
 function Filtrar() {
