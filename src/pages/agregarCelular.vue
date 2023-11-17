@@ -64,9 +64,9 @@
 
                         <!-- Botón estático en pantallas más grandes -->
 
-                        <fieldset style="border: 2px solid #000000" class="q-gutter-">
+                        <fieldset style="border: 2px solid #000000" class="">
                         
-                            <div class="col-md-6 col-;g12 q-pa-md">
+                            <div class="q-gutter-sm">
                                 <br>
                                 <div class="input-group">
                                     <br><br>
@@ -76,22 +76,26 @@
                                 </div>
                                 <div class="input-group">
                                     <label class="label">Marca:</label>
-                                    <q-input v-model="nuevoAnuncio.marca" outlined dense  
-                                  
-                                     ref="marcaRef"
-                                    style=" border: 2px solid ; "  />
+                                    <q-select label="" transition-show="scale" transition-hide="scale" filled
+                                        v-model="nuevoAnuncio.marca" :options="opcionesmarca" style=" border: 2px solid #00000098 ;"
+                                        @keyup.enter="prompt = false" />
                                 </div>
 
                                 <div class="input-group">
                                     <label class="label">Modelo:</label>
                                     <q-input v-model="nuevoAnuncio.modelo" outlined dense 
                                         style=" border: 2px solid #00000098 ; " /> 
+
+                                     
                                 </div>
+
+
 
                                  <div class="input-group">
                                     <label class="label">Pantalla:</label>
                                     <q-input v-model="nuevoAnuncio.pantalla" outlined dense
-                                        style=" border: 2px solid #00000098 ; " /><label class="label">Pulgadas</label>
+                                        style=" border: 2px solid #00000098 ; " />
+                                        <label class="label">Pulgadas</label>
                                 </div>
                                 <div class="input-group">
                                     <label class="label">Sistema:</label>
@@ -211,7 +215,7 @@
                                 <fieldset
                                     style="width: 110px; margin: 0 auto; text-align: center; border: 2px solid #00000098;  ">
                                     <legend> <label class="label"> Precio</label></legend>
-                                    <q-input v-model="nuevoAnuncio.precio" label="Precio" outlined dense mask="###.##" fill-mask="0"
+                                    <q-input v-model="nuevoAnuncio.precio" label="Precio" outlined dense mask="##########" 
                                         style="width: 100%; border: 2px solid #00000098 ;" />
                                 </fieldset>
 
@@ -256,6 +260,8 @@ import { ref as refStorage, uploadBytes, getDownloadURL, } from "firebase/storag
 
 const slide= ref(0);
 const options=  ['Android', 'Windows', 'IOS',];
+const opcionesmarca=  ['Samsung', 'Huawei', 'Nokia','IPhone','Xiaomi',];
+const opcionespantalla=  ['5','5.5','6',];
 
 //variables del nuevo anuncio
 const nuevoAnuncio = ref({
@@ -390,6 +396,7 @@ async function agregarAnuncio() {
 //funcion de  DIALOGO para mostrar mensaje de exito
 const dialogVisible = ref(false);
 function persistent() {
+    
   dialogVisible.value = true;
   agregarAnuncio();
   // Configura un temporizador para ocultar el cuadro de diálogo después de 4 segundos

@@ -91,36 +91,44 @@
 
         <div class="row q-ma-lg">
           <q-card
-            class="my-card col-3"
+            class="my-card col-3 first-card"
             v-for="(item, index) in datosPaginados"
             :key="index"
+           
           >
             <q-card-section class="q-pa-md">
               <!-- MAqui se muestra la imagen con relacion a la tarjeta -->
               <div class="q-ma-xs q-pa-sm flex justify-center items-center">
-                <q-img
-                  :src="item.imagen"
-                  class="fit"
-                  style="max-width: 100px; max-height: 200px"
-                />
+                <div class="q-ma-xs q-pa-sm flex justify-center items-center" style="width: 200px; height: 300px;">
+                  
+                  <q-img
+  :src="item.imagen"
+  class="q-ma-xs q-pa-sm flex justify-center items-center"
+  max-width="200px"
+  max-height="200px"
+  cover 
+/>
+</div>
               </div>
             </q-card-section>
 
             <!-- Informacion de la tarjeta-->
             <q-card-section>
               <div class="text-h6" style="text-align: center">
-                {{ item.precio }}
+               $ {{ item.precio }}
               </div>
               <div class="text-subtitle2" style="text-align: center">
                 {{ item.marca }}, {{ item.modelo }}, {{ item.pantalla }}
               </div>
             </q-card-section>
             <q-card-section class="q-pt-none">
+              <div>
               <q-btn
                 color="primary"
                 label="detalles"
                 @click="paginadetalle(item.id)"
               />
+            </div>
             </q-card-section>
           </q-card>
         </div>
@@ -227,6 +235,7 @@
 
         <!-- Informacion de la tarjeta-->
         <q-card-section>
+          
           <div class="text-h6" style="text-align: center">
             {{ item.precio }}
           </div>
@@ -492,5 +501,10 @@ const paginadetalle = (id) => {
 
 .inputPosition {
   margin: 0 auto;
+}
+
+.first-card {
+  border: 1px solid rgba(0, 0, 0, 0.4); /* Color del borde más oscuro */
+  box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.1); /* Sombra más sutil */
 }
 </style>
