@@ -14,11 +14,11 @@ const routes = [
 
     children: [
       {
-        path: "",
+        path: "/inicio",
         component: () => import("pages/PaginaInicio.vue"),
       },
       {
-        path: "/detalle/:IDANUNCIO",
+        path: '/detalle/:IDANUNCIO',
         component: () => import("pages/detalleCelular.vue"),
       },
       { path: "/agregar", component: () => import("pages/agregarCelular.vue") },
@@ -40,5 +40,6 @@ const routes = [
     component: () => import("pages/ErrorNotFound.vue"),
   },
 ];
+
 
 export default routes;

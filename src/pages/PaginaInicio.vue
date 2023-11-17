@@ -110,7 +110,7 @@
               <q-btn
                 color="primary"
                 label="detalles"
-                :to="'/detalle/' + item.id"
+                @click="paginadetalle(item.id)"
               />
             </q-card-section>
           </q-card>
@@ -212,10 +212,10 @@
           </q-card-section>
           <q-card-section class="q-pt-none">
             <q-btn
-              color="primary"
-              label="detalles"
-              :to="'/detalle/' + item.id"
-            />
+      color="primary"
+      label="detalles"
+      @click="paginadetalle(item.id)"
+    />
           </q-card-section>
         </q-card>
       </div>
@@ -432,6 +432,15 @@ onMounted(async () => {
 });
 
 //FIN DE FUNCION!!!------------------------------------------------------------
+
+//funcion para redireccionar la pagina a detalle
+import { useRouter } from "vue-router";
+const router = useRouter();
+
+const paginadetalle = (id) => {
+  console.log('ID para la redirección:', id);
+  router.push(`/detalle/${id}`);
+};
 </script>
 
 <style lang="scss" scoped>

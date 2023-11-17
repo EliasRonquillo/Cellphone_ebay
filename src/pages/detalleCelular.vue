@@ -97,7 +97,7 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-import { db } from "boot/database";
+import { db } from 'src/boot/firebase';
 import { useRoute } from "vue-router";
 import { doc, getDoc } from "firebase/firestore";
 
