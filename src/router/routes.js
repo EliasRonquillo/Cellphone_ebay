@@ -9,7 +9,7 @@ const routes = [
   },
   */
   {
-    path: "/inicio",
+    path: "/",
     component: () => import("layouts/InicioLayout.vue"),
 
     children: [
@@ -18,12 +18,18 @@ const routes = [
         component: () => import("pages/PaginaInicio.vue"),
       },
       {
-        path: "detalle/:IDANUNCIO",
+        path: "/detalle/:IDANUNCIO",
         component: () => import("pages/detalleCelular.vue"),
       },
       { path: "/agregar", component: () => import("pages/agregarCelular.vue") },
-      { path: "/estadistica", component: () => import("pages/estadisticaCelular.vue") },
-      { path: "/ejemplo", component: () => import("pages/EjemploImagenes.vue") },
+      {
+        path: "/estadistica",
+        component: () => import("pages/estadisticaCelular.vue"),
+      },
+      {
+        path: "/ejemplo",
+        component: () => import("pages/EjemploImagenes.vue"),
+      },
     ],
   },
 

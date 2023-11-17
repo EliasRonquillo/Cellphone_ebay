@@ -34,11 +34,15 @@
       <div class="col-sm-12 col-12 col-md-6">
         <div class="info">
           <h6>
-            Iphone 6 pantalla de 8 pulgadas, 64Gb internos, 2Gb de Ram, Sólo
-            Banda Tigo, Nuevo
+            {{ articulo.marca }} {{ articulo.modelo }} pantalla de
+            {{ articulo.pantalla }} pulgadas, {{ articulo.rom }} internos,
+            {{ articulo.ram }}
+            de Ram, {{ articulo.estado }}
           </h6>
 
-          <h5><b>$235.00</b></h5>
+          <h5>
+            <b>${{ articulo.precio }}</b>
+          </h5>
 
           <div v-if="$q.screen.lt.md" class="q-gutter-md">
             <q-page-sticky position="bottom">
@@ -61,8 +65,8 @@
         <q-separator spaced />
         <fieldset class="col-sm-12 col-12">
           <div class="row q-gutter-xl justify-center">
-            <span>Vendedor: Juan Perez</span>
-            <span>Teléfono: 7374-2312</span>
+            <span>Vendedor: {{ articulo.vendedor }}</span>
+            <span>Teléfono: {{ articulo.numero }}</span>
           </div>
         </fieldset>
       </div>
@@ -77,20 +81,14 @@
     <div class="row">
       <div class="col">
         <div class="text-center q-gutter-xl">
-          <textarea cols="40" rows="10">
-                        Estado: Nuevo
-                        Marca: Iphone
-                        Modelo: 6 plus
-                        Pantalla: 7 pulgadas
-                        Sistema: Ios
-                        Rom: 64GB
-                        Ram: 2GB
-                    </textarea
-          >
-
-          <textarea cols="40" rows="10">
-Telefono en muy buenas condiciones, tiene dos cámaras, la caja esta abierta, pero con muy poco uso, practicamente nuevo, la compañia con la que estaba es Tigo, asi que el chip debe ser tigo, viene con su caja original y con todos sus accesorios. Puedo mandar más fotos si desea por whatsapp</textarea
-          >
+          <span class="q-ml-xl text-h6">{{ articulo.estado }}</span>
+          <span class="q-ml-xl text-h6">{{ articulo.marca }}</span>
+          <span class="q-ml-xl text-h6">{{ articulo.modelo }}</span>
+          <span class="q-ml-xl text-h6">{{ articulo.pantalla }}</span>
+          <span class="q-ml-xl text-h6">{{ articulo.sistema }}</span>
+          <span class="q-ml-xl text-h6">{{ articulo.rom }}</span>
+          <span class="q-ml-xl text-h6">{{ articulo.ram }}</span>
+          <p>{{ articulo.descripcion }}</p>
         </div>
       </div>
     </div>
@@ -105,16 +103,12 @@ import { doc, getDoc } from "firebase/firestore";
 
 const slide = ref(1);
 const route = useRoute();
+const docRef = ref({});
 const articulo = ref({});
 
-onMounted(() => {
-  obtenerArticulo();
-  console.log(route.params.IDANUNCIO);
-});
-
 async function obtenerArticulo() {
-  const docRef = doc(db, "anuncios", route.params.IDANUNCIO);
-  const docSnap = await getDoc(docRef);
+  docRef.value = doc(db, "anuncios", route.params.IDANUNCIO);
+  const docSnap = await getDoc(docRef.value);
 
   if (docSnap.exists()) {
     console.log("Document data:", docSnap.data());
@@ -124,6 +118,10 @@ async function obtenerArticulo() {
     console.log("No such document!");
   }
 }
+
+onMounted(() => {
+  obtenerArticulo();
+});
 </script>
 
 <style lang="scss" scoped>
