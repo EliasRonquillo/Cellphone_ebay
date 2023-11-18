@@ -3,25 +3,31 @@
     <div class="row">
       <div class="col-md-6 col-12">
         <div class="col-sm-6 col-12">
-         
-          
-       
-          <q-carousel v-for="(coleccion, index) in colecciones" :key="index"
-                  animated v-model="coleccion.slide" navigation infinite
-                  :autoplay="autoplay" arrows transition-prev="slide-right" transition-next="slide-left"
-                  @mouseenter="autoplay = false" @mouseleave="autoplay = true"
-                  >
-        <q-carousel-slide v-for="(imagen, i) in coleccion.imagenes" :key="i" :name="i" :img-src="imagen" />
-      </q-carousel>
-   
-      
+          <q-carousel
+            v-for="(coleccion, index) in colecciones"
+            :key="index"
+            animated
+            v-model="coleccion.slide"
+            navigation
+            infinite
+            :autoplay="autoplay"
+            arrows
+            transition-prev="slide-right"
+            transition-next="slide-left"
+            @mouseenter="autoplay = false"
+            @mouseleave="autoplay = true"
+          >
+            <q-carousel-slide
+              v-for="(imagen, i) in coleccion.imagenes"
+              :key="i"
+              :name="i"
+              :img-src="imagen"
+            />
+          </q-carousel>
         </div>
       </div>
 
-
-
       <div class="col-sm-12 col-12 col-md-6">
-        
         <div class="info">
           <h6>
             {{ articulo.marca }} {{ articulo.modelo }} pantalla de
@@ -68,32 +74,39 @@
       </div>
     </div>
 
-    <div class="row">
+    <div class="row q-mt-md">
       <div class="col">
         <div class="text-center q-gutter-xl">
-          <span class="q-ml-xl text-h6">{{ articulo.estado }}</span>
-          <span class="q-ml-xl text-h6">{{ articulo.marca }}</span>
-          <span class="q-ml-xl text-h6">{{ articulo.modelo }}</span>
-          <span class="q-ml-xl text-h6">{{ articulo.pantalla }}</span>
-          <span class="q-ml-xl text-h6">{{ articulo.sistema }}</span>
-          <span class="q-ml-xl text-h6">{{ articulo.rom }}</span>
-          <span class="q-ml-xl text-h6">{{ articulo.ram }}</span>
-          <p>{{ articulo.descripcion }}</p>
+          <span class="q-ml-xl text-h6">Estado: {{ articulo.estado }}</span>
+          <br />
+          <span class="q-ml-xl text-h6">Marca: {{ articulo.marca }}</span>
+          <br />
+          <span class="q-ml-xl text-h6">Modelo: {{ articulo.modelo }}</span>
+          <br />
+          <span class="q-ml-xl text-h6">Pantalla: {{ articulo.pantalla }}</span>
+          <br />
+          <span class="q-ml-xl text-h6">Sistema: {{ articulo.sistema }}</span>
+          <br />
+          <span class="q-ml-xl text-h6">ROM: {{ articulo.rom }}</span>
+          <br />
+          <span class="q-ml-xl text-h6">RAM: {{ articulo.ram }}</span>
+          <br />
         </div>
       </div>
+      <div class="col">
+        <p>{{ articulo.descripcion }}</p>
+      </div>
     </div>
-   
   </q-card-section>
 </template>
 
 <script setup>
 import { ref, onMounted } from "vue";
-import { getDownloadURL, listAll, ref as refStorage } from 'firebase/storage';
-import { db, storage } from 'src/boot/firebase';
+import { getDownloadURL, listAll, ref as refStorage } from "firebase/storage";
+import { db, storage } from "src/boot/firebase";
 import { useRoute } from "vue-router";
 import { doc, getDoc } from "firebase/firestore";
-import { collection, getDocs } from 'firebase/firestore';
-
+import { collection, getDocs } from "firebase/firestore";
 
 const route = useRoute();
 const docRef = ref({});
@@ -114,21 +127,21 @@ async function obtenerArticulo() {
   }
 }
 
-
 //datos importantes
-const anunciosCollection = collection(db, 'anuncios');
+const anunciosCollection = collection(db, "anuncios");
 const colecciones = ref([]);
 let autoplay = ref(true);
 
 //funcion para la busqueda de imagenes por ID
 async function cargarColecciones() {
   try {
-    const idAnuncio = route.params.IDANUNCIO; // Se obtiene nada mas el ID 
+    const idAnuncio = route.params.IDANUNCIO; // Se obtiene nada mas el ID
 
     const docRef = doc(anunciosCollection, idAnuncio);
     const docSnapshot = await getDoc(docRef);
 
-    if (docSnapshot.exists()) { //Nada mas verifica si existe el ID(documento) en la coleccion de informacion
+    if (docSnapshot.exists()) {
+      //Nada mas verifica si existe el ID(documento) en la coleccion de informacion
       const anuncioRef = refStorage(storage, `/anuncios/${idAnuncio}/`);
       const items = await listAll(anuncioRef);
 
@@ -138,23 +151,21 @@ async function cargarColecciones() {
           const url = await getDownloadURL(imageRef);
           imagenes.push(url);
         } catch (error) {
-          console.error('Error obteniendo URL:', error);
-          imagenes.push('');
+          console.error("Error obteniendo URL:", error);
+          imagenes.push("");
         }
       }
 
       colecciones.value.push({ nombre: docSnapshot.id, imagenes, slide: 0 });
     } else {
-      console.error('El documento con ID ' + idAnuncio + ' no existe');
+      console.error("El documento con ID " + idAnuncio + " no existe");
     }
   } catch (error) {
-    console.error('Error cargando colecciones:', error);
+    console.error("Error cargando colecciones:", error);
   }
 }
 
-
-
-onMounted(async() => {
+onMounted(async () => {
   obtenerArticulo();
   await cargarColecciones();
 });

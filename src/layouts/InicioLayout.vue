@@ -24,11 +24,21 @@
 
         <div class="q-px-xl gt-sm">
           <q-btn color="primary" label="Inicio" @click="paginainicio" />
-          <q-btn color="primary" label="Estadisticas"  @click="paginaestadistica"/>
+          <q-btn
+            color="primary"
+            label="Estadisticas"
+            @click="paginaestadistica"
+          />
         </div>
 
         <div class="q-px-xl gt-sm">
-          <q-btn color="primary" size="lg" rounded icon="add" @click="paginaexterna"/>
+          <q-btn
+            color="primary"
+            size="lg"
+            rounded
+            icon="add"
+            @click="paginaexterna"
+          />
           <q-btn flat round color="white" size="lg" icon="shopping_cart" />
         </div>
       </q-toolbar>
@@ -63,24 +73,32 @@
                 <q-icon :name="menuItem.icon" />
               </q-item-section>
 
-              
               <q-item-section @click="handleMenuItemClick(menuItem)">
-  {{ menuItem.label }}
-</q-item-section>
-              
+                {{ menuItem.label }}
+              </q-item-section>
             </q-item>
             <q-separator :key="'sep' + index" v-if="menuItem.separator" />
           </template>
         </q-list>
       </q-scroll-area>
     </q-drawer>
+    <q-footer reveal elevated>
+      <q-toolbar class="justify-center shadow-2 rounded-borders">
+        <div>
+          <span>Alvarado Landaverde, Ángel Aristides - AL20034 </span>
+        </div>
+        <div class="q-ml-lg">
+          <span> Ronquillo López, Pablo Elías - RL18003</span>
+        </div>
+      </q-toolbar>
+    </q-footer>
     <q-page-container>
       <router-view />
     </q-page-container>
   </q-layout>
 </template>
 
-<script >
+<script>
 import { useRouter } from "vue-router";
 import { ref } from "vue";
 
@@ -89,18 +107,14 @@ const menuList = [
     icon: "campaign",
     label: "Tienda Cellphone",
     separator: true,
-   
   },
   {
     label: "Inicio",
     separator: true,
-    
-    
   },
   {
     label: "Nuevo anuncio",
     separator: true,
-
   },
   {
     label: "Carrito",
@@ -125,7 +139,7 @@ export default {
       // Utiliza el método push de Vue Router para navegar a la página deseada
       router.push("/inicio");
     };
-    
+
     const paginaestadistica = () => {
       // Utiliza el método push de Vue Router para navegar a la página deseada
       router.push("/estadistica");
@@ -140,25 +154,22 @@ export default {
     };
   },
 
-// eventos dentro de los metodos para direccionar paginas
+  // eventos dentro de los metodos para direccionar paginas
   methods: {
     handleMenuItemClick(menuItem) {
-    
-
-      if (menuItem.label === 'Inicio') {
-        this.$router.push('/inicio');
+      if (menuItem.label === "Inicio") {
+        this.$router.push("/inicio");
       }
 
-      if (menuItem.label === 'Nuevo anuncio') {
-        this.$router.push('/agregar');
+      if (menuItem.label === "Nuevo anuncio") {
+        this.$router.push("/agregar");
       }
-     
-      if (menuItem.label === 'Estadísticas') {
-        this.$router.push('/estadistica');
+
+      if (menuItem.label === "Estadísticas") {
+        this.$router.push("/estadistica");
       }
       // Otras acciones según sea necesario
-    }
-  }
+    },
+  },
 };
-
 </script>

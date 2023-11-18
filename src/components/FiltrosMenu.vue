@@ -56,6 +56,7 @@
     <div class="row">
       <div class="col">
         <q-btn
+          rounded
           color="primary"
           label="Filtrar"
           @click="Filtrar"

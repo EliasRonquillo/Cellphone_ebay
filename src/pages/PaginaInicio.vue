@@ -94,41 +94,44 @@
             class="my-card col-3 tarejtaestilos"
             v-for="(item, index) in datosPaginados"
             :key="index"
-           
           >
             <q-card-section class="q-pa-md">
               <!-- MAqui se muestra la imagen con relacion a la tarjeta -->
               <div class="q-ma-xs q-pa-sm flex justify-center items-center">
-                <div class="q-ma-xs q-pa-sm flex justify-center items-center" style="width: 200px; height: 300px;">
-                  
+                <div
+                  class="q-ma-xs q-pa-sm flex justify-center items-center"
+                  style="width: 200px; height: 300px"
+                >
                   <q-img
-  :src="item.imagen"
-  class="q-ma-xs q-pa-sm flex justify-center items-center"
-  max-width="200px"
-  max-height="200px"
-  cover 
-/>
-</div>
+                    :src="item.imagen"
+                    class="q-ma-xs q-pa-sm flex justify-center items-center"
+                    max-width="200px"
+                    max-height="200px"
+                    cover
+                  />
+                </div>
               </div>
             </q-card-section>
 
             <!-- Informacion de la tarjeta-->
             <q-card-section>
               <div class="text-h6" style="text-align: center">
-               $ {{ item.precio }}
+                $ {{ item.precio }}
               </div>
               <div class="text-subtitle2" style="text-align: center">
-                {{ item.marca }}, {{ item.modelo }}, {{ item.pantalla }}
+                {{ item.marca }}, {{ item.modelo }}
               </div>
             </q-card-section>
             <q-card-section class="q-pt-none">
-              <div>
-              <q-btn
-                color="primary"
-                label="detalles"
-                @click="paginadetalle(item.id)"
-              />
-            </div>
+              <div class="q-pl-xl q-ml-md">
+                <q-btn
+                  rounded
+                  style=""
+                  color="primary"
+                  label="detalles"
+                  @click="paginadetalle(item.id)"
+                />
+              </div>
             </q-card-section>
           </q-card>
         </div>
@@ -218,7 +221,7 @@
     </div>
     <div class="row lt-sm">
       <q-card
-        class="my-card col-6"
+        class="my-card col-6 tarejtaestilos"
         v-for="(item, index) in datosPaginados"
         :key="index"
       >
@@ -235,16 +238,20 @@
 
         <!-- Informacion de la tarjeta-->
         <q-card-section>
-          
           <div class="text-h6" style="text-align: center">
             {{ item.precio }}
           </div>
           <div class="text-subtitle2" style="text-align: center">
-            {{ item.marca }}, {{ item.modelo }}, {{ item.pantalla }}
+            {{ item.marca }}, {{ item.modelo }}
           </div>
         </q-card-section>
-        <q-card-section class="q-pt-none">
-          <q-btn color="primary" label="detalles" :to="'/detalle/' + item.id" />
+        <q-card-section class="q-pt-none q-pl-xl">
+          <q-btn
+            color="primary"
+            label="detalles"
+            :to="'/detalle/' + item.id"
+            rounded
+          />
         </q-card-section>
       </q-card>
     </div>
@@ -384,22 +391,6 @@ function FiltrarPrecio() {
 }
 
 function LimpiarFiltros() {
-  /*
-  HayFiltro.value = false;
-  store.dataMarca = [];
-  store.dataSistema = [];
-  store.dataPantalla = [];
-  anuncios.value = [];
-  anuncios.value = anunciosSinFIltro.value;
-  console.log(anunciosSinFIltro.value);
-  */
-  /*
-  const querySnapshot = await getDocs(collection(db, "anuncios"));
-  querySnapshot.forEach((doc) => {
-    //doc.data() is never undefined for query doc snapshots
-    anuncios.value = doc.data();
-    console.log(doc.id, " => ", doc.data());
-  });*/
   window.location.reload();
 }
 
@@ -510,7 +501,8 @@ const paginadetalle = (id) => {
 }
 
 .tarejtaestilos:hover {
-  transform: scale(0.95); /* Reducción ligeramente el tamaño al posicionar el cursor */
- 
+  transform: scale(
+    0.95
+  ); /* Reducción ligeramente el tamaño al posicionar el cursor */
 }
 </style>
