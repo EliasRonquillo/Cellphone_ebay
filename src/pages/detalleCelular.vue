@@ -43,7 +43,7 @@
           <div v-if="$q.screen.lt.md" class="q-gutter-md">
             <q-page-sticky position="bottom">
               <div class="q-ma-md">
-                <q-btn color="primary" label="Inicio" class="q-btn-lg" />
+                <q-btn color="primary" label="Inicio" class="q-btn-lg" @click="paginainicio"  />
                 <q-btn color="accent" label="Comprar" class="q-btn-lg" />
               </div>
             </q-page-sticky>
@@ -169,6 +169,14 @@ onMounted(async () => {
   obtenerArticulo();
   await cargarColecciones();
 });
+
+//PARA DIRECCIONAR PAGINAS
+import { useRouter } from "vue-router";
+const router = useRouter();
+const paginainicio = () => {
+      // Utiliza el método push de Vue Router para navegar a la página deseada
+      router.push("/inicio");
+    };
 </script>
 
 <style lang="scss" scoped>
