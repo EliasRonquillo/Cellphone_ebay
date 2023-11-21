@@ -7,7 +7,11 @@ const routes = [
       { path: '', component: () => import('pages/IndexPage.vue') }
     ]
   },
-  */
+  */{
+    path: '/',
+    redirect: '/inicio' // Esta línea redirige '/' a la ruta '/inicio'
+  },
+  
   {
     path: "/",
     component: () => import("layouts/InicioLayout.vue"),

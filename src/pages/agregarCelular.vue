@@ -54,10 +54,32 @@
                                                 <b class="text-white">Agregar foto</b>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
 
+
+                                    </div>
+
+                                    
+                                </div>
+                               
                             </fieldset>
+                            <table class="table">
+                                    <thead>
+                                        <tr>
+                                        <th scope="col-md-12">Eliminar</th>
+                                        <th scope="col-md-12">N°</th>
+                                        <th scope="col-md-12">Tamaño</th>
+                                        <th scope="col-md-12">Nombre</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-for="(imagen, index) in imagenes" :key="index">
+                                        <th><p><q-btn icon="remove" color="negative" label="" @click="eliminarImagen(index)" rounded  class="btneliminarimg" /></p></th>
+                                        <th scope="row-md-12"><p>{{ index + 1 }}</p></th>
+                                        <th scope="row-md-12"><p>{{ tamanosImagenes[index] }}</p></th>
+                                        <th scope="row-md-12"><p>{{ imagenesnombre[index] }}</p></th>
+                                        </tr>
+                                    </tbody>
+                                    </table>
                             <br><br>
 
                         </div>
